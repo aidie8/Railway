@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.mixin.client;
 
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.util.AbstractionUtils;
 import com.simibubi.create.content.contraptions.actors.psi.PortableStorageInterfaceRenderer;

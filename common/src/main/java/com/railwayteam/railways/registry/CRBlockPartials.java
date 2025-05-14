@@ -18,12 +18,12 @@
 
 package com.railwayteam.railways.registry;
 
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.foundation.utility.Lang;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.NotNull;
@@ -44,21 +44,21 @@ public class CRBlockPartials {
     public static final Map<String, ResourceLocation> CUSTOM_CONDUCTOR_SKINS_FOR_NAME = new HashMap<>(); // for if a conductor is renamed, rather than the cap
 
     public static void registerCustomCap(String itemName, String modelLoc) {
-        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
     }
 
     public static void registerCustomCap(String itemName, String modelLoc, boolean preventTilting) {
-        CUSTOM_CONDUCTOR_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
         if (preventTilting)
             NO_TILT_CAPS.add(itemName);
     }
 
     public static void registerCustomConductorOnlyCap(String itemName, String modelLoc) {
-        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
     }
 
     public static void registerCustomConductorOnlyCap(String itemName, String modelLoc, boolean preventTilting) {
-        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, new PartialModel(Railways.asResource("item/dev_caps/"+modelLoc)));
+        CUSTOM_CONDUCTOR_ONLY_CAPS.put(itemName, PartialModel.of(Railways.asResource("item/dev_caps/"+modelLoc)));
         if (preventTilting)
             NO_TILT_CAPS.add(itemName);
     }
@@ -522,11 +522,11 @@ public class CRBlockPartials {
     public static final PartialModel CONDUCTOR_ANTENNA = block("conductor_antenna");
 
     private static PartialModel createBlock(String path) {
-        return new PartialModel(Create.asResource("block/" + path));
+        return PartialModel.of(Create.asResource("block/" + path));
     }
 
     private static PartialModel block(String path) {
-        return new PartialModel(Railways.asResource("block/" + path));
+        return PartialModel.of(Railways.asResource("block/" + path));
     }
 
     static {

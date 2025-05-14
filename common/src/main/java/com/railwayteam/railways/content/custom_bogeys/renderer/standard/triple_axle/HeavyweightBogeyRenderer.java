@@ -26,7 +26,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -60,11 +60,11 @@ public class HeavyweightBogeyRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(HEAVYWEIGHT_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(LONG_SHAFTED_WHEELS, ms, inInstancedContraption, 3);
         for (int side = -1; side < 2; side++) {
@@ -74,7 +74,7 @@ public class HeavyweightBogeyRenderer extends BogeyRenderer {
             wheel.translate(0, 12 / 16f, side * 1.5)
                     .rotateX(wheelAngle)
                     .translate(0, -12 / 16f, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

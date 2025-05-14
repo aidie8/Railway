@@ -58,11 +58,11 @@ public class Medium10010TenderRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(MEDIUM_10_0_10_TENDER_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 5);
         for (int side = -1; side < 4; side++) {
@@ -72,7 +72,7 @@ public class Medium10010TenderRenderer extends BogeyRenderer {
             wheel.translate(0, 13 / 16f, -1.5f + side * 1.5)
                     .rotateX(wheelAngle)
                     .translate(0, -13 / 16f, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

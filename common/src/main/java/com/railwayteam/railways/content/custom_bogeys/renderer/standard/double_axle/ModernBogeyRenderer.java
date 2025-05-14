@@ -24,7 +24,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
@@ -46,7 +46,7 @@ public class ModernBogeyRenderer extends BogeyRenderer {
         boolean inInstancedContraption = vb == null;
 
         getTransform(MODERN_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(LONG_SHAFTED_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
@@ -56,7 +56,7 @@ public class ModernBogeyRenderer extends BogeyRenderer {
             wheel.translate(0, 12 / 16f, side)
                     .rotateX(wheelAngle)
                     .translate(0, -12 / 16f, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

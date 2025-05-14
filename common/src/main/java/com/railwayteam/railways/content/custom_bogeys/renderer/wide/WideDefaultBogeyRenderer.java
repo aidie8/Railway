@@ -18,65 +18,54 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.wide;
 
-import com.jozufozu.flywheel.api.MaterialManager;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
-import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.CR_WIDE_BOGEY_WHEELS;
 import static com.railwayteam.railways.registry.CRBlockPartials.WIDE_DEFAULT_FRAME;
 
-public class WideDefaultBogeyRenderer extends BogeyRenderer {
-    @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, CR_WIDE_BOGEY_WHEELS, 2);
-        createModelInstance(materialManager, WIDE_DEFAULT_FRAME);
-        createModelInstance(materialManager, AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), 2);
-    }
+public class WideDefaultBogeyRenderer implements BogeyRenderer {
+
 
     @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.SMALL;
-    }
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
 
-    @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
-        boolean inInstancedContraption = vb == null;
-
-        BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
-                .setValue(ShaftBlock.AXIS, Direction.Axis.Z), ms, inInstancedContraption, 2);
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+        SuperByteBuffer secondaryShafts = CachedBuffers.block((AllBlocks.SHAFT.getDefaultState()
+                .setValue(ShaftBlock.AXIS, Direction.Axis.Z)));
 
         for (int i : Iterate.zeroAndOne) {
-            secondaryShafts[i].translate(-.5, 6 / 16., .5 + i * -2)
-                    .centre()
+            secondaryShafts.translate(-.5, 6 / 16., .5 + i * -2)
+                    .center()
                     .rotateZ(wheelAngle)
-                    .unCentre()
-                    .render(ms, light, vb);
+                    .uncenter()
+                    .renderInto(poseStack, buffer);
         }
 
-        getTransform(WIDE_DEFAULT_FRAME, ms, inInstancedContraption)
+        CachedBuffers.partial(WIDE_DEFAULT_FRAME, Blocks.AIR.defaultBlockState())
                 .translate(0, 5 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
-        BogeyModelData[] wheels = getTransform(CR_WIDE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
+        SuperByteBuffer wheels = CachedBuffers.partial(CR_WIDE_BOGEY_WHEELS,Blocks.AIR.defaultBlockState());
         for (int side : Iterate.positiveAndNegative) {
-            if (!inInstancedContraption)
-                ms.pushPose();
-            BogeyModelData wheel = wheels[(side + 1) / 2];
-            wheel.translate(0, 14 / 16., side * 1.5)
+            //TODO: not sure what this should be in the new way of doing it
+           // SuperByteBuffer  wheel = wheels[(side + 1) / 2];
+            wheels.translate(0, 14 / 16., side * 1.5)
                     .rotateX(wheelAngle)
                     .translate(0, 0, 0)
-                    .render(ms, light, vb);
-            if (!inInstancedContraption)
-                ms.popPose();
+                    .renderInto(poseStack, buffer);
         }
     }
 }

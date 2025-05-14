@@ -27,9 +27,10 @@ import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.placement.IPlacementHelper;
-import com.simibubi.create.foundation.placement.PlacementHelpers;
-import com.simibubi.create.foundation.placement.PlacementOffset;
+import net.createmod.catnip.placement.IPlacementHelper;
+import net.createmod.catnip.placement.PlacementHelpers;
+import net.createmod.catnip.placement.PlacementOffset;
+import net.createmod.ponder.PonderClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -162,7 +163,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
 
 
         if (world.getBlockState(context.getClickedPos()) != state)
-            playRotateSound(world, context.getClickedPos());
+            IWrenchable.playRotateSound(world, context.getClickedPos());
 
         return InteractionResult.SUCCESS;
     }
@@ -248,7 +249,7 @@ public class SemaphoreBlock extends HorizontalDirectionalBlock implements IBE<Se
             if (!offset.hasGhostState())
                 return;
 
-            CreateClient.GHOST_BLOCKS.showGhostState(this, offset.getTransform().apply(offset.getGhostState().setValue(FULL,true)))
+            PonderClient.GHOST_BLOCKS.showGhostState(this, offset.getTransform().apply(offset.getGhostState().setValue(FULL,true)))
                     .at(offset.getBlockPos())
                     .breathingAlpha();
         }

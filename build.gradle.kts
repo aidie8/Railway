@@ -375,6 +375,8 @@ fun Project.setupRepositories() {
                 includeGroupByRegex("com.github.*")
             }
         }
+        maven ("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/")
+        maven ("https://maven.createmod.net")
     }
 }
 

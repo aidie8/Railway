@@ -26,8 +26,8 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -62,7 +62,7 @@ public class WideScotchYokeBogeyRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
@@ -75,17 +75,17 @@ public class WideScotchYokeBogeyRenderer extends BogeyRenderer {
                         .centre()
                         .rotateX(wheelAngle)
                         .unCentre()
-                        .render(ms, light, vb);
+                        .renderInto(poseStack, buffer);
             }
         }
 
         getTransform(WIDE_SCOTCH_FRAME, ms, inInstancedContraption)
                 .translate(0, 0, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(WIDE_SCOTCH_PISTONS, ms, inInstancedContraption)
                 .translate(0, 1, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         if (!inInstancedContraption)
             ms.pushPose();
@@ -94,14 +94,14 @@ public class WideScotchYokeBogeyRenderer extends BogeyRenderer {
                 .translate(0, 1, 0)// 14/16
                 .rotateX(wheelAngle)
                 .translate(0, 0, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(WIDE_SCOTCH_PINS, ms, inInstancedContraption)
                 .translate(0, 1, 0)
                 .rotateX(wheelAngle)
                 .translate(0, 1 / 4f, 0)
                 .rotateX(-wheelAngle)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         if (!inInstancedContraption)
             ms.popPose();

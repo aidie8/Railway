@@ -27,8 +27,8 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -67,22 +67,22 @@ public class LargeCreateStyled040Renderer extends BogeyRenderer {
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
 
             BogeyModelData middleShaft = middleShafts[(side + 1) / 2];
             middleShaft.translate(-.5f, .25f, -.5f + side * 1.2)
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(LARGE_CREATE_STYLED_0_4_0_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(LARGE_CREATE_STYLED_0_4_0_PISTON, ms, inInstancedContraption)
                 .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] pins = getTransform(AllPartialModels.BOGEY_PIN, ms, inInstancedContraption, 2);
@@ -93,14 +93,14 @@ public class LargeCreateStyled040Renderer extends BogeyRenderer {
             BogeyModelData wheel = wheels[(side + 1) / 2];
             wheel.translate(0, 1, side * .8732)
                     .rotateX(wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
 
             BogeyModelData pin = pins[(side + 1) / 2];
             pin.translate(0, 1, side * .8732)
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
 
             if (!inInstancedContraption) ms.popPose();
         }

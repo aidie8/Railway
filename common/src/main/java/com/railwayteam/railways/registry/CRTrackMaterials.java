@@ -19,7 +19,7 @@
 package com.railwayteam.railways.registry;
 
 import com.google.common.collect.ImmutableSet;
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.railwayteam.railways.content.custom_tracks.monorail.MonorailTrackBlock;
@@ -146,9 +146,9 @@ public class CRTrackMaterials {
             .trackType(CRTrackMaterials.CRTrackType.MONORAIL)
             .noRecipeGen()
             .customModels(
-                () -> () -> new PartialModel(Railways.asResource("block/monorail/monorail/monorail_half")),
-                () -> () -> new PartialModel(Railways.asResource("block/empty")),
-                () -> () -> new PartialModel(Railways.asResource("block/empty"))
+                () -> () -> PartialModel.of(Railways.asResource("block/monorail/monorail/monorail_half")),
+                () -> () -> PartialModel.of(Railways.asResource("block/empty")),
+                () -> () -> PartialModel.of(Railways.asResource("block/empty"))
             )
             .build(),
         ENDER = make(Railways.asResource("ender"))

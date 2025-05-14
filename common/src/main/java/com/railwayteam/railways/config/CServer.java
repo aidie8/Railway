@@ -18,12 +18,13 @@
 
 package com.railwayteam.railways.config;
 
-import com.simibubi.create.foundation.config.ConfigBase;
+
+import net.createmod.catnip.config.ConfigBase;
 
 @SuppressWarnings("unused")
 public class CServer extends ConfigBase {
 
-    public final ConfigGroup misc = group(0, "misc", Comments.misc);
+    public final ConfigBase.ConfigGroup misc = group(0, "misc", Comments.misc);
 
     public final ConfigBool strictCoupler = b(false, "strictCoupler", Comments.strictCoupler);
     public final ConfigBool flipDistantSwitches = b(true, "flipDistantSwitches", Comments.flipDistantSwitches);

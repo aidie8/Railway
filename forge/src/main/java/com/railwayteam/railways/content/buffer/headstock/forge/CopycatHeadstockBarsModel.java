@@ -19,7 +19,7 @@
 package com.railwayteam.railways.content.buffer.headstock.forge;
 
 import com.simibubi.create.content.decoration.copycat.CopycatModel;
-import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.model.BakedQuadHelper;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -73,9 +73,9 @@ public class CopycatHeadstockBarsModel extends CopycatModel {
             int[] vertexData = newQuad.getVertices();
             for (int vertex = 0; vertex < 4; vertex++) {
                 BakedQuadHelper.setU(vertexData, vertex, targetSprite
-                    .getU(SpriteShiftEntry.getUnInterpolatedU(original, BakedQuadHelper.getU(vertexData, vertex))));
+                    .getU(CTSpriteShiftEntry.getUnInterpolatedU(original, BakedQuadHelper.getU(vertexData, vertex))));
                 BakedQuadHelper.setV(vertexData, vertex, targetSprite
-                    .getV(SpriteShiftEntry.getUnInterpolatedV(original, BakedQuadHelper.getV(vertexData, vertex))));
+                    .getV(CTSpriteShiftEntry.getUnInterpolatedV(original, BakedQuadHelper.getV(vertexData, vertex))));
             }
             quads.add(newQuad);
         }

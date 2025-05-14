@@ -27,7 +27,7 @@ import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.foundation.gui.widget.Indicator;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
@@ -140,7 +140,7 @@ public class BogeyMenuHandlerClient {
             CompoundTag tag = new CompoundTag();
             ListTag listTag = new ListTag();
             for (BogeyStyle style : favorites) {
-                listTag.add(StringTag.valueOf(style.name.toString()));
+                listTag.add(StringTag.valueOf(style.displayName.toString()));
             }
             tag.put("Favorites", listTag);
             NbtIo.write(tag, new File(Minecraft.getInstance().gameDirectory, "snr_favorite_styles.nbt"));

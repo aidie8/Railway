@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.content.cycle_menu;
 
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -27,12 +27,11 @@ import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuEventsHandle
 import com.railwayteam.railways.mixin.client.AccessorToolboxHandlerClient;
 import com.railwayteam.railways.registry.CRKeys;
 import com.railwayteam.railways.util.client.ClientUtils;
-import com.simibubi.create.foundation.gui.AbstractSimiScreen;
+import net.createmod.catnip.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.element.GuiGameElement;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Components;
+import net.createmod.catnip.gui.element.GuiGameElement;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.animation.AnimationTickHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -89,7 +88,7 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
         ms.translate(width / 2, height / 2, 0);
         Component tip = null;
         ResourceLocation tagLoc = tag.location();
-        Component title = Components.translatable("tag.item." + tagLoc.getNamespace() + "." + tagLoc.getPath().replace('/', '.'));
+        Component title = Component.translatable("tag.item." + tagLoc.getNamespace() + "." + tagLoc.getPath().replace('/', '.'));
 
         /*
         core rendering
@@ -99,8 +98,8 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
         for (int slot = 0; slot < 8; slot++) {
             ms.pushPose();
             double radius = -40 + (10 * (1 - fade) * (1 - fade));
-            double angle = slot * 45 - 45;
-            TransformStack.cast(ms)
+            float angle = slot * 45 - 45;
+            TransformStack.of(ms)
                     .rotateZ(angle)
                     .translate(0, radius, 0)
                     .rotateZ(-angle);
@@ -124,7 +123,7 @@ public class RadialTagCycleMenu extends AbstractSimiScreen {
 
                     if (selected) {
                         AllGuiTextures.TOOLBELT_SLOT_HIGHLIGHT.render(graphics, -1, -1);
-                        tip = Components.empty().append(stack.getHoverName())
+                        tip = Component.empty().append(stack.getHoverName())
                             .withStyle(ChatFormatting.GOLD);
                     }
                 }

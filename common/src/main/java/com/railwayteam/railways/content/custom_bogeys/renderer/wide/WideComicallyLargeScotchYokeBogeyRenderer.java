@@ -26,8 +26,8 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -62,7 +62,7 @@ public class WideComicallyLargeScotchYokeBogeyRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         BogeyModelData[] secondaryShafts = getTransform(AllBlocks.SHAFT.getDefaultState()
@@ -75,17 +75,17 @@ public class WideComicallyLargeScotchYokeBogeyRenderer extends BogeyRenderer {
                         .centre()
                         .rotateX(wheelAngle)
                         .unCentre()
-                        .render(ms, light, vb);
+                        .renderInto(poseStack, buffer);
             }
         }
 
         getTransform(WIDE_COMICALLY_LARGE_FRAME, ms, inInstancedContraption)
                 .translate(0, 4 / 16., 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(WIDE_COMICALLY_LARGE_PISTONS, ms, inInstancedContraption)
                 .translate(0, 1.5, (1 / 4f + (5 / 16.)) * Math.sin(AngleHelper.rad(wheelAngle)))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         if (!inInstancedContraption)
             ms.pushPose();
@@ -94,14 +94,14 @@ public class WideComicallyLargeScotchYokeBogeyRenderer extends BogeyRenderer {
                 .translate(0, 1.5, 0)
                 .rotateX(wheelAngle)
                 .translate(0, 0, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(WIDE_COMICALLY_LARGE_PINS, ms, inInstancedContraption)
                 .translate(0, 1.5, 0)
                 .rotateX(wheelAngle)
                 .translate(0, 1 / 4f + (5 / 16.), 0)
                 .rotateX(-wheelAngle)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         if (!inInstancedContraption)
             ms.popPose();

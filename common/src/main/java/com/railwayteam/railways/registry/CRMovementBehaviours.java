@@ -19,7 +19,7 @@
 package com.railwayteam.railways.registry;
 
 import com.simibubi.create.AllMovementBehaviours;
-import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
+import com.simibubi.create.api.behaviour.movement.MovementBehaviour;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 

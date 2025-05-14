@@ -18,7 +18,7 @@
 
 package com.railwayteam.railways.content.custom_tracks.phantom;
 
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.content.custom_tracks.NoCollisionCustomTrackBlock;
 import com.simibubi.create.content.trains.track.BezierTrackPointLocation;

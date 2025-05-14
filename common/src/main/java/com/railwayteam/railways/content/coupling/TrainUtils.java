@@ -39,10 +39,10 @@ import com.simibubi.create.content.trains.graph.TrackNode;
 import com.simibubi.create.content.trains.schedule.ScheduleRuntime;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.station.GlobalStation;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -103,9 +103,9 @@ public class TrainUtils {
         }
         train.doubleEnded = train.carriages.stream().anyMatch(carriage -> carriage.anyAvailableEntity().getContraption() instanceof CarriageContraption carriageContraption && carriageContraption.hasBackwardControls());
         if(!train.name.getString().contains("Split off from: ")){
-            newTrain.name = Components.literal("Split off from: "+train.name.getString());
+            newTrain.name = Component.literal("Split off from: "+train.name.getString());
         }
-        else newTrain.name = Components.literal(train.name.getString());
+        else newTrain.name = Component.literal(train.name.getString());
 
 
 

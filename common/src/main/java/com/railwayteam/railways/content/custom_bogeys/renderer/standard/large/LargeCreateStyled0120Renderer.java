@@ -27,8 +27,8 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -68,7 +68,7 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         for (int side = -3; side < 4; side++) {
@@ -79,15 +79,15 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(LARGE_CREATE_STYLED_0_12_0_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(LARGE_CREATE_STYLED_0_12_0_PISTON, ms, inInstancedContraption)
                 .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] fullBlindWheels = getTransform(LC_STYLE_FULL_BLIND_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] semiBlindWheels = getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption, 2);
@@ -102,18 +102,18 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
             fullBlindWheel.translate(0, 1, side * .8733)
                     .rotateX(wheelAngle)
                     .translate(0, -1, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
 
             BogeyModelData semiBlindWheel = semiBlindWheels[(side + 1) / 2];
             semiBlindWheel.translate(0, 1, side * 2.62)
                     .rotateX(wheelAngle)
                     .translate(0, -1, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
 
             BogeyModelData wheel = wheels[(side + 1) / 2];
             wheel.translate(0, 1, side * 4.3665)
                     .rotateX(wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         for (int side = -3; side < 3; side++) {
@@ -122,7 +122,7 @@ public class LargeCreateStyled0120Renderer extends BogeyRenderer {
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         if (!inInstancedContraption)

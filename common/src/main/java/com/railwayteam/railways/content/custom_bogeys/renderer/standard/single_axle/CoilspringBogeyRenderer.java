@@ -45,11 +45,11 @@ public class CoilspringBogeyRenderer extends BogeyRenderer {
     public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
         boolean inInstancedContraption = vb == null;
         getTransform(COILSPRING_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption)
                 .translate(0, 12 / 16f, 0)
                 .rotateX(wheelAngle)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
     }
 }

@@ -26,7 +26,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -63,14 +63,14 @@ public class MonoBogeyRenderer extends BogeyRenderer {
                         .centre()
                         .rotateZ(left ? wheelAngle : -wheelAngle)
                         .unCentre()
-                        .render(ms, light, vb);
+                        .renderInto(poseStack, buffer);
             }
         }
 
         getTransform(MONOBOGEY_FRAME, ms, inInstancedContraption)
                 .rotateZ(specialUpsideDown ? 180 : 0)
                 .translateY(specialUpsideDown ? -3 : 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(MONOBOGEY_WHEEL, ms, inInstancedContraption, 4);
         for (boolean left : Iterate.trueAndFalse) {
@@ -81,7 +81,7 @@ public class MonoBogeyRenderer extends BogeyRenderer {
                 wheel.translate(left ? -13 / 16f : 13 / 16f, specialUpsideDown ? 32 / 16f : 0 / 16f, front * 16 / 16f)
                         .rotateY(left ? wheelAngle : -wheelAngle)
                         .translate(13 / 16f, 0, 16 / 16f)
-                        .render(ms, light, vb);
+                        .renderInto(poseStack, buffer);
                 if (!inInstancedContraption)
                     ms.popPose();
             }

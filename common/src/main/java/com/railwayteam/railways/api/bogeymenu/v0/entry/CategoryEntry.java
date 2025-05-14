@@ -22,7 +22,6 @@ import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.bogey_menu.handler.BogeyMenuHandlerClient;
 import com.railwayteam.railways.impl.bogeymenu.v0.BogeyMenuManagerImpl;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
-import com.simibubi.create.foundation.utility.Components;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
@@ -67,7 +66,7 @@ public class CategoryEntry {
         private int cachedVersion = -1;
 
         private FavoritesCategory() {
-            super(Components.translatable("railways.gui.bogey_menu.category.favorites"), Railways.asResource("favorites"));
+            super(Component.translatable("railways.gui.bogey_menu.category.favorites"), Railways.asResource("favorites"));
         }
 
         @Override

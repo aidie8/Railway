@@ -21,7 +21,7 @@ package com.railwayteam.railways.content.custom_bogeys.blocks.base;
 import com.railwayteam.railways.content.custom_bogeys.blocks.base.be.CRBogeyBlockEntity;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes.BogeySize;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -37,7 +37,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class CRBogeyBlock extends AbstractBogeyBlock<CRBogeyBlockEntity>
-	implements IBE<CRBogeyBlockEntity>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+	implements IBE<CRBogeyBlockEntity>, ProperWaterloggedBlock, SpecialBlockItemRequirement {
 
 	private final BogeyStyle defaultStyle;
 

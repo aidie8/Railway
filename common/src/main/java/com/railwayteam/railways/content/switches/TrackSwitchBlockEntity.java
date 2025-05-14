@@ -18,8 +18,9 @@
 
 package com.railwayteam.railways.content.switches;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import com.simibubi.create.api.contraption.transformable.TransformableBlockEntity;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchConstraint;
@@ -27,9 +28,8 @@ import com.railwayteam.railways.content.switches.TrackSwitchBlock.SwitchState;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CREdgePointTypes;
 import com.railwayteam.railways.registry.CRIcons;
-import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
 import com.simibubi.create.content.contraptions.StructureTransform;
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
@@ -42,7 +42,11 @@ import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIc
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.utility.*;
-import com.simibubi.create.foundation.utility.animation.LerpedFloat;
+import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -65,7 +69,7 @@ import static java.util.stream.Collectors.toSet;
 import static net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING;
 
 
-public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransformableBlockEntity, IHaveGoggleInformation {
+public class TrackSwitchBlockEntity extends SmartBlockEntity implements TransformableBlockEntity, IHaveGoggleInformation {
     public TrackTargetingBehaviour<TrackSwitch> edgePoint;
     private SwitchState state;
     private int lastAnalogOutput = 0;
@@ -137,7 +141,7 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CREdgePointTypes.SWITCH));
         if (isAutomatic()) {
-            autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Components.translatable("railways.switch.auto_mode"),
+            autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Component.translatable("railways.switch.auto_mode"),
                     this, new ValueBoxTransform() {
                 @Override
                 public Vec3 getLocalOffset(BlockState state) {
@@ -148,7 +152,7 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements ITransfo
 
                 @Override
                 public void rotate(BlockState state, PoseStack ms) {
-                    TransformStack.cast(ms)
+                    TransformStack.of(ms)
                             .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING)) - 90)
                             .rotateX(90);
                 }

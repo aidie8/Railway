@@ -22,7 +22,7 @@ package com.railwayteam.railways.content.custom_bogeys.special.monobogey;
 import com.google.common.collect.ImmutableList;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
@@ -46,7 +46,7 @@ import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public abstract class AbstractMonoBogeyBlock<T extends MonoBogeyBlockEntity> extends AbstractBogeyBlock<T> implements IBE<T>, ProperWaterloggedBlock, ISpecialBlockItemRequirement {
+public abstract class AbstractMonoBogeyBlock<T extends MonoBogeyBlockEntity> extends AbstractBogeyBlock<T> implements IBE<T>, ProperWaterloggedBlock, SpecialBlockItemRequirement {
 
     public static final BooleanProperty UPSIDE_DOWN = BooleanProperty.create("upside_down");
 

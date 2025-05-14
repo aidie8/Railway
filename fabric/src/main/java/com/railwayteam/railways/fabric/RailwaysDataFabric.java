@@ -34,12 +34,7 @@ public class RailwaysDataFabric implements DataGeneratorEntrypoint {
 		// Ensure that all mods are present if they are needed for data gen
 		for (Mods mod : Mods.values())
 			mod.assertForDataGen();
-
-		Path railwaysResources = Paths.get(System.getProperty(ExistingFileHelper.EXISTING_RESOURCES));
-		// fixme re-enable the existing file helper when porting lib's ResourcePackLoader.createPackForMod is fixed
-		ExistingFileHelper helper = new ExistingFileHelper(
-			Set.of(railwaysResources), Set.of("create"), false, null, null
-		);
+		ExistingFileHelper helper = ExistingFileHelper.withResourcesFromArg();
 		FabricDataGenerator.Pack pack = gen.createPack();
 		Railways.registrate().setupDatagen(pack, helper);
 		Railways.gatherData(pack);

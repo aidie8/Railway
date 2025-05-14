@@ -27,8 +27,8 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -67,7 +67,7 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
                     .centre()
                     .rotateX(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         for (int side = -2; side < 3; side++) {
@@ -78,15 +78,15 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(LARGE_CREATE_STYLED_0_8_0_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(LARGE_CREATE_STYLED_0_8_0_PISTON, ms, inInstancedContraption)
                 .translate(0, 0, 1 / 4f * Math.sin(AngleHelper.rad(wheelAngle)))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(AllPartialModels.LARGE_BOGEY_WHEELS, ms, inInstancedContraption, 2);
         BogeyModelData[] innerWheels = getTransform(LC_STYLE_SEMI_BLIND_WHEELS, ms, inInstancedContraption, 2);
@@ -99,13 +99,13 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
             BogeyModelData wheel = wheels[(side + 1) / 2];
             wheel.translate(0, 1, side * 2.62)
                     .rotateX(wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
 
             BogeyModelData innerWheel = innerWheels[(side + 1) / 2];
             innerWheel.translate(0, 1, side * .8732)
                     .rotateX(wheelAngle)
                     .translate(0, -1, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         for (int side = 0; side < 4; side++) {
@@ -114,7 +114,7 @@ public class LargeCreateStyled080Renderer extends BogeyRenderer {
                     .rotateX(wheelAngle)
                     .translate(0, 1 / 4f, 0)
                     .rotateX(-wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         if (!inInstancedContraption)

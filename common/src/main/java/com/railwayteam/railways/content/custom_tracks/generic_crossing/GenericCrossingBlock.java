@@ -18,22 +18,22 @@
 
 package com.railwayteam.railways.content.custom_tracks.generic_crossing;
 
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockEntities;
 import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.api.schematic.requirement.SpecialBlockItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.content.trains.graph.TrackNodeLocation;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.utility.Iterate;
-import com.simibubi.create.foundation.utility.VecHelper;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.VecHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -75,7 +75,7 @@ import static com.simibubi.create.AllShapes.*;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBlockEntity>, ITrackBlock, IWrenchable, ISpecialBlockItemRequirement, ProperWaterloggedBlock {
+public class GenericCrossingBlock extends Block implements IBE<GenericCrossingBlockEntity>, ITrackBlock, IWrenchable, SpecialBlockItemRequirement, ProperWaterloggedBlock {
 
     public static final EnumProperty<TrackShape> SHAPE = TrackBlock.SHAPE;
 

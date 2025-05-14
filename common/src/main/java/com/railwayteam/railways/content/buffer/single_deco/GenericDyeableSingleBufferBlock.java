@@ -18,8 +18,8 @@
 
 package com.railwayteam.railways.content.buffer.single_deco;
 
-import com.simibubi.create.foundation.utility.VoxelShaper;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

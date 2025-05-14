@@ -26,7 +26,7 @@ import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -76,7 +76,7 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
 
         getTransform(HANDCAR_FRAME, ms, inInstancedContraption)
                 .translate(0, 5 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         Vec3 coupling_pos;
         {
@@ -113,33 +113,33 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
                 .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
                 .translateY(-34 / 16.)
                 .scale(firstPerson ? 0 : 1)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
         getTransform(HANDCAR_HANDLE_FIRST_PERSON, ms, inInstancedContraption)
                 .translateY(39 / 16.)
                 .rotateZ(180)
                 .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
                 .translateY(-34 / 16.)
                 .scale(firstPerson ? 1 : 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(HANDCAR_COUPLING, ms, inInstancedContraption)
                 .translate(coupling_pos)
                 .rotateXRadians(-(couplingAngle - Mth.HALF_PI))
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(HANDCAR_LARGE_COG, ms, inInstancedContraption)
                 .translate(-8 / 16f, 12 / 16f, -3.5 / 16f)
                 .rotateX((-wheelAngle / 2) + 22.5)
                 .rotateZ(90)
                 .translate(0, -7 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(HANDCAR_SMALL_COG, ms, inInstancedContraption)
                 .translate(-8 / 16f, 12 / 16f, -1)
                 .rotateX(wheelAngle)
                 .rotateZ(90)
                 .translate(0, -7 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(HANDCAR_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
@@ -149,7 +149,7 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
                     .translate(0, 12 / 16f, side)
                     .rotateX(wheelAngle)
                     .translate(0, -12 / 16f, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

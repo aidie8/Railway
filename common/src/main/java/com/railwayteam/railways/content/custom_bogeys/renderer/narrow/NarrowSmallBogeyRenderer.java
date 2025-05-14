@@ -25,7 +25,7 @@ import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.NARROW_FRAME;
@@ -55,12 +55,12 @@ public class NarrowSmallBogeyRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(NARROW_FRAME, ms, inInstancedContraption)
                 .translate(0, 5 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(NARROW_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
@@ -70,7 +70,7 @@ public class NarrowSmallBogeyRenderer extends BogeyRenderer {
             wheel.translate(0, 11 / 16., side * (10 / 16.))
                     .rotateX(wheelAngle)
                     .translate(0, 0, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

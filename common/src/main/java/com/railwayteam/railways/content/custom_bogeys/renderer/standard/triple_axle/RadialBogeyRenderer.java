@@ -46,7 +46,7 @@ public class RadialBogeyRenderer extends BogeyRenderer {
         boolean inInstancedContraption = vb == null;
         getTransform(RADIAL_FRAME, ms, inInstancedContraption)
                 .translate(0, 5 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(CR_BOGEY_WHEELS, ms, inInstancedContraption, 3);
         for (int side = -1; side < 2; side++) {
@@ -56,7 +56,7 @@ public class RadialBogeyRenderer extends BogeyRenderer {
             wheel.translate(0, 12 / 16f, side*1.5)
                     .rotateX(wheelAngle)
                     .translate(0, -7 / 16f, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

@@ -18,14 +18,14 @@
 
 package com.railwayteam.railways.content.conductor;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.Pair;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.data.Pair;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRBlockPartials;
-import com.simibubi.create.foundation.render.CachedBufferer;
+import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -129,7 +129,7 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 //			override.get().applyTransform(ItemTransforms.TransformType.HEAD, poseStack, false);
 			override.get().getTransforms().head.apply(false, poseStack);
 			poseStack.translate(-0.5, -0.5, -0.5);
-			CachedBufferer.partial(override, Blocks.AIR.defaultBlockState())
+			CachedBufferspartial(override, Blocks.AIR.defaultBlockState())
 				.light(packedLight)
 				.overlay(packedOverlay)
 				.renderInto(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.translucent()));

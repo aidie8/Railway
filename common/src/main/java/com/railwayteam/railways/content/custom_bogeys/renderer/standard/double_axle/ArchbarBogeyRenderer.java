@@ -24,16 +24,17 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
-import com.simibubi.create.content.trains.bogey.BogeyRenderer;
+
 import com.simibubi.create.content.trains.bogey.BogeySizes;
+import com.simibubi.create.content.trains.bogey.StandardBogeyRenderer;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class ArchbarBogeyRenderer extends BogeyRenderer {
+public class ArchbarBogeyRenderer extends StandardBogeyRenderer {
     @Override
     public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
         createModelInstance(materialManager, AllPartialModels.SMALL_BOGEY_WHEELS, 2);
@@ -60,11 +61,11 @@ public class ArchbarBogeyRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(ARCHBAR_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(AllPartialModels.SMALL_BOGEY_WHEELS, ms, inInstancedContraption, 2);
         for (int side : Iterate.positiveAndNegative) {
@@ -73,7 +74,7 @@ public class ArchbarBogeyRenderer extends BogeyRenderer {
             BogeyModelData wheel = wheels[(side + 1) / 2];
             wheel.translate(0, 11.975 / 16f, side * 0.998)
                     .rotateX(wheelAngle)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

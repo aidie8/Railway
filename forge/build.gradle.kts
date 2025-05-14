@@ -39,8 +39,11 @@ dependencies {
     // Create and its dependencies
     modImplementation("com.simibubi.create:create-${"minecraft_version"()}:${"create_forge_version"()}:slim") { isTransitive = false }
     modImplementation("com.tterrag.registrate:Registrate:${"registrate_forge_version"()}")
-    modImplementation("com.jozufozu.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
+    modImplementation("dev.engine-room.flywheel:flywheel-forge-api-${"minecraft_version"()}:${"flywheel_forge_version"()}")
+    modImplementation("dev.engine-room.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
 
+
+    modImplementation("net.createmod.ponder:Ponder-Common-${"minecraft_version"()}:${"ponder_version"()}")
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
 

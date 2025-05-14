@@ -20,7 +20,7 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.util.TextUtils;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -85,7 +85,7 @@ public class CRTags {
     }
 
     AllBlockTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
-      ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
+      ResourceLocation id = new ResourceLocation(namespace.id, path == null ? CreateLang.asId(name()) : path);
       if (optional) {
         tag = optionalTag(BuiltInRegistries.BLOCK, id);
       } else {
@@ -148,7 +148,7 @@ public class CRTags {
     }
 
     AllItemTags(NameSpace namespace, String path, boolean optional, boolean alwaysDatagen) {
-      ResourceLocation id = new ResourceLocation(namespace.id, path == null ? Lang.asId(name()) : path);
+      ResourceLocation id = new ResourceLocation(namespace.id, path == null ? CreateLang.asId(name()) : path);
       if (optional) {
         tag = optionalTag(BuiltInRegistries.ITEM, id);
       } else {

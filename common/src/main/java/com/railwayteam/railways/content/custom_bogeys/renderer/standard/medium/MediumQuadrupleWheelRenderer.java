@@ -59,11 +59,11 @@ public class MediumQuadrupleWheelRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(MEDIUM_QUADRUPLE_WHEEL_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         BogeyModelData[] wheels = getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption, 4);
         for (int side = -1; side < 3; side++) {
@@ -73,7 +73,7 @@ public class MediumQuadrupleWheelRenderer extends BogeyRenderer {
             wheel.translate(0, 13 / 16f, -.75f + side * 1.5)
                     .rotateX(wheelAngle)
                     .translate(0, -13 / 16f, 0)
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
             if (!inInstancedContraption)
                 ms.popPose();
         }

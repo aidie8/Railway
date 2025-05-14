@@ -20,8 +20,8 @@ package com.railwayteam.railways.content.custom_tracks.generic_crossing;
 
 import com.simibubi.create.content.trains.track.TrackMaterial;
 import com.simibubi.create.content.trains.track.TrackShape;
-import com.simibubi.create.foundation.utility.Couple;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Couple;
+import net.createmod.catnip.data.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;

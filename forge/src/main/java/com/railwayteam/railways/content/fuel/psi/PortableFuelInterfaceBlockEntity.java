@@ -35,7 +35,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-
 public class PortableFuelInterfaceBlockEntity extends PortableStorageInterfaceBlockEntity {
 
     protected LazyOptional<IFluidHandler> capability;

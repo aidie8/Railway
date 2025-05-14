@@ -26,7 +26,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
-import com.simibubi.create.foundation.utility.Iterate;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 
@@ -58,16 +58,16 @@ public class Medium202TrailingRenderer extends BogeyRenderer {
                     .centre()
                     .rotateZ(wheelAngle)
                     .unCentre()
-                    .render(ms, light, vb);
+                    .renderInto(poseStack, buffer);
         }
 
         getTransform(MEDIUM_2_0_2_TRAILING_FRAME, ms, inInstancedContraption)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
 
         getTransform(MEDIUM_SHARED_WHEELS, ms, inInstancedContraption)
                 .translate(0, 13 / 16f, 0)
                 .rotateX(wheelAngle)
                 .translate(0, -13 / 16f, 0)
-                .render(ms, light, vb);
+                .renderInto(poseStack, buffer);
     }
 }

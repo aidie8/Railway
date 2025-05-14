@@ -22,7 +22,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.foundation.render.CachedBufferer;
+import net.createmod.catnip.render.CachedBuffers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -53,7 +53,7 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferer.partial(CRBlockPartials.CONDUCTOR_ANTENNA, Blocks.AIR.defaultBlockState())
+			CachedBufferspartial(CRBlockPartials.CONDUCTOR_ANTENNA, Blocks.AIR.defaultBlockState())
 					/*.rotateY(netHeadYaw)
 					.rotateX(headPitch)*/
 
@@ -74,7 +74,7 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferer.partial(AllPartialModels.BLAZE_GOGGLES, Blocks.AIR.defaultBlockState())
+			CachedBufferspartial(AllPartialModels.BLAZE_GOGGLES, Blocks.AIR.defaultBlockState())
 					/*.rotateY(netHeadYaw)
 					.rotateX(headPitch)*/
 

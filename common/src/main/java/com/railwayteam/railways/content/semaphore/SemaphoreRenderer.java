@@ -18,17 +18,17 @@
 
 package com.railwayteam.railways.content.semaphore;
 
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.redstone.nixieTube.NixieTubeBlock;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
+import net.createmod.catnip.render.CachedBuffers;
 import com.simibubi.create.foundation.render.RenderTypes;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.animation.AnimationTickHolder;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -92,7 +92,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW_FLIPPED:CRBlockPartials.SEMAPHORE_ARM_RED_FLIPPED:
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW:CRBlockPartials.SEMAPHORE_ARM_RED;
         }
-        CachedBufferer.partial(arm, blockState)
+        CachedBufferspartial(arm, blockState)
                 .light(light)
                 .rotateCentered(Direction.EAST,angle * (upside_down?-1:1))
                 .renderInto(ms, buffer.getBuffer(RenderType.solid()));
@@ -119,7 +119,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
 
 
-            CachedBufferer.partial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
+            CachedBufferspartial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
                     .light(0xF000F0)
                     .disableDiffuse()
                     .scale(1, 1, 1)

@@ -20,7 +20,7 @@ package com.railwayteam.railways.content.conductor.whistle;
 
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
+import com.simibubi.create.api.contraption.transformable.TransformableBlockEntity;
 import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.graph.EdgePointType;
@@ -39,7 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class ConductorWhistleFlagBlockEntity extends SmartBlockEntity implements ITransformableBlockEntity {
+public class ConductorWhistleFlagBlockEntity extends SmartBlockEntity implements TransformableBlockEntity {
 
     public TrackTargetingBehaviour<GlobalStation> station;
     private boolean tickedOnce = false;
