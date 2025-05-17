@@ -371,7 +371,7 @@ public class CRBogeyStyles {
     }
 
     private static void addToCategory(CategoryEntry category, BogeyStyle style, float scale) {
-        String bogeyName = style.displayName.getString();
+        String bogeyName = style.id.getPath();
         if (style == STANDARD) bogeyName = "default";
         ResourceLocation icon = Railways.asResource("textures/gui/bogey_icons/" + bogeyName + "_icon.png");
 

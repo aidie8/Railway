@@ -103,13 +103,13 @@ public class Railways {
     migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
     
     ModSetup.register();
-
+    finalizeRegistrate();
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
 
-    if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
-      MixinEnvironment.getCurrentEnvironment().audit();
+    //if (Utils.isDevEnv() && !Mods.BYG.isLoaded && !Mods.SODIUM.isLoaded && !Utils.isEnvVarTrue("DATAGEN")) // force all mixins to load in dev
+      //MixinEnvironment.getCurrentEnvironment().audit();
   }
 
   public static ResourceLocation asResource(String name) {

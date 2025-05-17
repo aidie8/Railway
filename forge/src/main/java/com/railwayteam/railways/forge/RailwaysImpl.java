@@ -52,21 +52,16 @@ public class RailwaysImpl {
 
 	public RailwaysImpl() {
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
-		finalizeRegistrate();
+
 		CRCreativeModeTabsImpl.register(RailwaysImpl.bus);
-		bus.addListener(RailwaysImpl::init);
+		Railways.init();
 		CRConfigsImpl.register(ModLoadingContext.get());
 		CRParticleTypesParticleEntryImpl.register(bus);
+		//noinspection Convert2MethodRef
+		Env.CLIENT.runIfCurrent(() ->()-> RailwaysClientImpl.init());
 
 
 
-
-
-
-	}
-	public static void init(final FMLCommonSetupEvent event)
-	{
-		event.enqueueWork(Railways::init);
 
 	}
 	public static void finalizeRegistrate() {

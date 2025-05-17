@@ -48,8 +48,10 @@ public class MixinTrackBlockClient {
     @Inject(method = "prepareTrackOverlay", at = @At(value = "INVOKE_ASSIGN", target ="Ldev/engine_room/flywheel/lib/transform/TransformStack;of(Lcom/mojang/blaze3d/vertex/PoseStack;)Ldev/engine_room/flywheel/lib/transform/PoseTransformStack;", ordinal = 0),
         locals = LocalCapture.CAPTURE_FAILSOFT, remap = false) // Yeah, it's nice to shift the overlays up, but don't crash the game for it.
     private void bezierShiftTrackOverlay(BlockGetter world, BlockPos pos, BlockState state, BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction, PoseStack ms, TrackTargetingBehaviour.RenderedTrackOverlayType type, CallbackInfoReturnable<PartialModel> cir) {
-        IHasTrackCasing casingBc = (IHasTrackCasing) bezierPoint.curveTarget();
-        if (world.getBlockEntity(pos) instanceof TrackBlockEntity trackBE) {
+
+
+        if (bezierPoint != null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackBE) {
+            IHasTrackCasing casingBc = (IHasTrackCasing) bezierPoint.curveTarget();
             BezierConnection bc = trackBE.getConnections().get(bezierPoint.curveTarget());
 
             if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {

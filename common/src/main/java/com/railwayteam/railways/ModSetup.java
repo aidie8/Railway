@@ -43,7 +43,7 @@ public class ModSetup {
   public static void register() {
     useBaseTab();
     CRTrackMaterials.register();
-
+    CRBogeyStyles.register();
     CRCreativeModeTabs.register();
     CRItems.register();
     CRSpriteShifts.register();
@@ -57,12 +57,12 @@ public class ModSetup {
     CREdgePointTypes.register();
     CRSchedule.register();
     CRDataFixers.register();
-    CRExtraRegistration.register();
+    //CRExtraRegistration.register();
     CasingCollisionUtils.register();
     CRInteractionBehaviours.register();
     CRMovementBehaviours.register();
     CRPortalTracks.register();
-    CRBogeyStyles.register();
+
     // Compat
     useTracksTab();
     HexCastingTrackCompat.register();

@@ -196,7 +196,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Inject(
             method = {
                     "lambda$backSignalListener$12", // fabric
-                    "lambda$backSignalListener$12" // forge
+                    "lambda$backSignalListener$10" // forge
             },
             at = @At("HEAD"),
             cancellable = true
@@ -216,7 +216,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Inject(
             method = {
                     "lambda$collectInitiallyOccupiedSignalBlocks$20", // fabric
-                    "lambda$collectInitiallyOccupiedSignalBlocks$20" // forge
+                    "lambda$collectInitiallyOccupiedSignalBlocks$18" // forge
             },
             at = @At("HEAD"),
             cancellable = true
