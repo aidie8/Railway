@@ -23,6 +23,7 @@ import com.railwayteam.railways.registry.CRBogeyStyles;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlockEntity;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -46,7 +47,7 @@ public class CRBogeyBlockEntity extends AbstractBogeyBlockEntity implements IHav
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        Lang.builder()
+        CreateLang.builder()
                 .add(Component.empty().append(getStyle().displayName).withStyle(ChatFormatting.GOLD))
                 .forGoggles(tooltip);
         return true;

@@ -21,7 +21,8 @@ package com.railwayteam.railways.fabric;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.content.conductor.IConductorHoldingFakePlayer;
-import com.simibubi.create.foundation.utility.Components;import net.fabricmc.fabric.api.entity.FakePlayer;
+import net.minecraft.network.chat.Component;
+import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
@@ -53,7 +54,7 @@ public class ConductorFakePlayerFabric extends FakePlayer implements IConductorH
 	@Override
 	@NotNull
 	public Component getDisplayName() {
-		return Components.translatable(Railways.MOD_ID + "." + "conductor_name");
+		return Component.translatable(Railways.MOD_ID + "." + "conductor_name");
 	}
 
 	@Override

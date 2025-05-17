@@ -21,7 +21,7 @@ package com.railwayteam.railways.registry.commands;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.util.DevCapeUtils;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.commands.SharedSuggestionProvider;
 
 import static com.railwayteam.railways.multiloader.ClientCommands.literal;
@@ -34,7 +34,7 @@ public class ReloadDevCapesCommand {
         .executes(ctx -> {
           Env.CLIENT.runIfCurrent(() -> DevCapeUtils.INSTANCE::refresh);
 
-          sendSuccess(ctx.getSource(), Components.literal("Refreshed dev capes"));
+          sendSuccess(ctx.getSource(), Component.literal("Refreshed dev capes"));
           return 1;
         });
   }

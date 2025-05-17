@@ -181,13 +181,12 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
         // Train casing on right side of screen where arrow is pointing START
         ms.pushPose();
 
-        TransformStack msr = TransformStack.cast(ms);
-        msr.pushPose()
-                .translate(x + background.width + 4, y + background.height + 4, 100)
-                .scale(40)
-                .rotateX(-22)
-                .rotateY(63);
-
+        TransformStack msr = TransformStack.of(ms);
+        msr.pushPose();
+        msr.translate(x + background.width + 4, y + background.height + 4, 100);
+        msr.rotateX(-22);
+        msr.rotateY(63);
+        msr.scale(40);
         GuiGameElement.of(AllBlocks.RAILWAY_CASING.getDefaultState()).render(guiGraphics);
 
         ms.popPose();
@@ -256,7 +255,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
                 bogeyScale = BogeyMenuManagerImpl.SIZES_TO_SCALE.get(renderPair);
             }
 
-            Block renderBlock = style.getBlockOfSize(renderSize);
+            Block renderBlock = style.getBlockForSize(renderSize);
             BlockState bogeyState = renderBlock.defaultBlockState().setValue(AbstractBogeyBlock.AXIS, Direction.Axis.Z);
             if (minecraft == null || !(renderBlock instanceof AbstractBogeyBlock<?> bogeyBlock)) return;
 
@@ -292,7 +291,7 @@ public class BogeyMenuScreen extends AbstractSimiScreen {
 
             // Render Bogey Block & Bogey
             minecraft.getBlockRenderer().renderSingleBlock(bogeyState, ms, bufferSource, light, overlay);
-            bogeyBlock.render(bogeyState, wheelAngle, ms, partialTicks, bufferSource, light, overlay, renderStyle, new CompoundTag());
+            bogeyBlock.getDefaultStyle().render(renderSize, partialTicks,ms, bufferSource, light, overlay,wheelAngle, new CompoundTag(),false);
 
             // End batch, pop modelViewStack & apply and pop the pose
             bufferSource.endBatch();

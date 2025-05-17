@@ -129,7 +129,7 @@ public class ConductorCapModel<T extends LivingEntity> extends Model implements 
 //			override.get().applyTransform(ItemTransforms.TransformType.HEAD, poseStack, false);
 			override.get().getTransforms().head.apply(false, poseStack);
 			poseStack.translate(-0.5, -0.5, -0.5);
-			CachedBufferspartial(override, Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(override, Blocks.AIR.defaultBlockState())
 				.light(packedLight)
 				.overlay(packedOverlay)
 				.renderInto(poseStack, Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.translucent()));

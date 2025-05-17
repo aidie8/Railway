@@ -26,14 +26,14 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.registry.CRBlockPartials;
 import com.railwayteam.railways.registry.CRBlockPartials.TrackCasingSpec;
 import com.railwayteam.railways.registry.CRTrackMaterials;
-import com.simibubi.create.content.schematics.SchematicWorld;
+import net.createmod.catnip.levelWrappers.SchematicLevel;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import com.simibubi.create.content.trains.track.*;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
-import com.simibubi.create.foundation.ponder.PonderWorld;
+import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.catnip.render.CachedBuffers;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -79,7 +79,7 @@ public class CustomTrackOverlayRendering {
     public static void renderOverlay(LevelAccessor level, BlockPos pos, Direction.AxisDirection direction,
                               BezierTrackPointLocation bezier, PoseStack ms, MultiBufferSource buffer, int light, int overlay,
                               PartialModel model, float scale, boolean offsetToSide) {
-        if (level instanceof SchematicWorld && !(level instanceof PonderWorld))
+        if (level instanceof SchematicLevel && !(level instanceof PonderLevel))
             return;
 
         BlockState trackState = level.getBlockState(pos);
@@ -91,7 +91,7 @@ public class CustomTrackOverlayRendering {
 
         PartialModel partial = prepareTrackOverlay(level, pos, trackState, bezier, direction, ms, model);
         if (partial != null)
-            CachedBufferspartial(partial, trackState)
+            CachedBuffers.partial(partial, trackState)
                 .translate(.5, 0, .5)
                 .scale(scale)
                 .translate(offsetToSide ? .5 : -.5, 0, -.5)
@@ -106,7 +106,7 @@ public class CustomTrackOverlayRendering {
     public static PartialModel prepareTrackOverlay(BlockGetter world, BlockPos pos, BlockState state,
                                                    BezierTrackPointLocation bezierPoint, Direction.AxisDirection direction,
                                                    PoseStack ms, PartialModel model) {
-        TransformStack msr = TransformStack.cast(ms);
+        TransformStack msr = TransformStack.of(ms);
 
         Vec3 axis = null;
         Vec3 diff = null;
@@ -139,7 +139,7 @@ public class CustomTrackOverlayRendering {
                     msr.translate(0, 14/16f, 0);
                 } else if (casingBc.getTrackCasing() != null) {
                     // Don't shift up if the curve is a slope and the casing is under the track, rather than in it
-                    if (bc.tePositions.getFirst().getY() == bc.tePositions.getSecond().getY()) {
+                    if (bc.bePositions.getFirst().getY() == bc.bePositions.getSecond().getY()) {
                         msr.translate(0, 1 / 16f, 0);
                     } else if (!casingBc.isAlternate()) {
                         msr.translate(0, 4 / 16f, 0);
@@ -181,17 +181,17 @@ public class CustomTrackOverlayRendering {
 
         Vec3 angles = TrackRenderer.getModelAngles(normal, diff);
 
-        msr.centre()
-            .rotateYRadians(angles.y)
-            .rotateXRadians(angles.x)
-            .unCentre();
+        msr.center();
+        msr.rotateY((float)angles.y);
+        msr.rotateX((float)angles.x);
+        msr.uncenter();
 
         if (axis != null)
             msr.translate(0, axis.y != 0 ? 7 / 16f : 0, axis.y != 0 ? direction.getStep() * 2.5f / 16f : 0);
         else {
             msr.translate(0, 4 / 16f, 0);
             if (direction == Direction.AxisDirection.NEGATIVE)
-                msr.rotateCentered(Direction.UP, Mth.PI);
+                msr.rotateCentered(Mth.PI,Direction.UP);
         }
 
         if (bezierPoint == null && world.getBlockEntity(pos) instanceof TrackBlockEntity trackTE
@@ -199,10 +199,10 @@ public class CustomTrackOverlayRendering {
             double yOffset = 0;
             for (BezierConnection bc : trackTE.getConnections().values())
                 yOffset += bc.starts.getFirst().y - pos.getY();
-            msr.centre()
-                .rotateX(-direction.getStep() * trackTE.tilt.smoothingAngle.get())
-                .unCentre()
-                .translate(0, yOffset / 2, 0);
+            msr.center();
+            msr  .rotateX((float)(-direction.getStep() * trackTE.tilt.smoothingAngle.get()));
+            msr  .uncenter();
+            msr .translate(0, yOffset / 2, 0);
         }
 
         return model;

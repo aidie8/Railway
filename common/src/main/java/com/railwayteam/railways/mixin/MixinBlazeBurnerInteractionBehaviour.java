@@ -20,7 +20,7 @@ package com.railwayteam.railways.mixin;
 
 import com.railwayteam.railways.mixin_interfaces.IIndexedSchedule;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
-import com.simibubi.create.content.processing.burner.BlazeBurnerInteractionBehaviour;
+import com.simibubi.create.api.behaviour.interaction.ConductorBlockInteractionBehavior;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
@@ -32,7 +32,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = BlazeBurnerInteractionBehaviour.class, remap = false)
+@Mixin(value = ConductorBlockInteractionBehavior.class, remap = false)
 public abstract class MixinBlazeBurnerInteractionBehaviour {
 
     @Inject(method = "handlePlayerInteraction", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;setSchedule(Lcom/simibubi/create/content/trains/schedule/Schedule;Z)V"))

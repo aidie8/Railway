@@ -23,6 +23,8 @@ import com.railwayteam.railways.content.conductor.ConductorEntity;
 import com.railwayteam.railways.registry.CRContainerTypes;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
 import com.simibubi.create.content.equipment.toolbox.ToolboxMenu;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.animatedContainer.AnimatedContainerBehaviour;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
@@ -40,7 +42,8 @@ public class MountedToolboxContainer extends ToolboxMenu {
 
   public MountedToolboxContainer(MenuType<?> type, int id, Inventory inv, MountedToolbox toolbox) {
     super(type, id, inv, toolbox);
-    toolbox.startOpen(player);
+    BlockEntityBehaviour.get(toolbox, AnimatedContainerBehaviour.TYPE)
+            .startOpen(player);
   }
 
   public static MountedToolboxContainer create(int id, Inventory inv, MountedToolbox toolbox) {

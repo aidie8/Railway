@@ -165,8 +165,8 @@ public class MonorailTrackBlock extends TrackBlock {
     @Environment(EnvType.CLIENT)
     public PartialModel prepareAssemblyOverlay(BlockGetter world, BlockPos pos, BlockState state, Direction direction,
                                                PoseStack ms) {
-        TransformStack.cast(ms)
-            .rotateCentered(Direction.UP, AngleHelper.rad(AngleHelper.horizontalAngle(direction)))
+        TransformStack.of(ms)
+            .rotateCentered( AngleHelper.rad(AngleHelper.horizontalAngle(direction)),Direction.UP)
             .translateY(14/16f);
         return CRBlockPartials.MONORAIL_TRACK_ASSEMBLING_OVERLAY;
     }

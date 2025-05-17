@@ -37,7 +37,6 @@
     "MixinCarriage",
     "MixinCarriageBogey",
     "MixinCarriageContraptionEntity",
-    "MixinConfigHelper",
     "MixinContraption",
     "MixinDataFixTypes",
     "MixinDeployerHandler",
@@ -102,6 +101,7 @@
     "conductor_possession.TrackedEntityMixin"
   ],
   "client": [
+    "MixinConfigHelper",
     "client.AccessorControlsHandler",
     "client.AccessorEntity",
     "client.AccessorInstance",

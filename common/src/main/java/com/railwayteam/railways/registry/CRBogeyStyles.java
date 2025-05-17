@@ -69,8 +69,8 @@ import com.simibubi.create.content.trains.CubeParticleData;
 import com.simibubi.create.content.trains.bogey.AbstractBogeyBlock;
 import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.bogey.BogeyStyle;
+import com.simibubi.create.content.trains.bogey.StandardBogeyVisual;
 import com.simibubi.create.content.trains.track.TrackMaterial.TrackType;
-import com.simibubi.create.foundation.utility.Components;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -94,7 +94,7 @@ public class CRBogeyStyles {
     public static final String QUINTUPLEAXLE_CYCLE_GROUP = "quintupleaxles";
     public static final String SEXTUPLEAXLE_CYCLE_GROUP = "sextupleaxles";
 
-    public static final CategoryEntry STANDARD_CATEGORY = registerCategory(Create.ID, STANDARD_CYCLE_GROUP);
+    public static final CategoryEntry STANDARD_CATEGORY = registerCategory(Create.ID, "standard");
     public static final CategoryEntry SINGLEAXLE_CATEGORY = registerCategory(SINGLEAXLE_CYCLE_GROUP);
     public static final CategoryEntry DOUBLEAXLE_CATEGORY = registerCategory(DOUBLEAXLE_CYCLE_GROUP);
     public static final CategoryEntry TRIPLEAXLE_CATEGORY = registerCategory(TRIPLEAXLE_CYCLE_GROUP);
@@ -120,7 +120,8 @@ public class CRBogeyStyles {
     }
 
     public static boolean styleFitsTrack(BogeyStyle style, TrackType trackType) {
-        if (style.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock) {
+        if (style.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?>) {
+            AbstractBogeyBlock<?> bogeyBlock = style.getNextBlock(BogeySizes.LARGE);
             return bogeyBlock.getValidPathfindingTypes(style).contains(trackType) && (trackType != CRTrackType.MONORAIL ^ bogeyBlock instanceof InvisibleMonoBogeyBlock);
         } else { // someone is doing something very weird. not going to stop them
             return true;
@@ -132,8 +133,12 @@ public class CRBogeyStyles {
     }
 
     private static Optional<BogeyStyle> getMappedRecursive(BogeyStyle from, TrackType toType, boolean recursive) {
-        if (from.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock && bogeyBlock.getValidPathfindingTypes(from).contains(toType))
-            return Optional.of(from);
+        if (from.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?>) {
+            AbstractBogeyBlock<?> bogeyBlock = from.getNextBlock(BogeySizes.LARGE);
+            if (bogeyBlock.getValidPathfindingTypes(from).contains(toType)) {
+                return Optional.of(from);
+            }
+        }
         Pair<BogeyStyle, TrackType> key = Pair.of(from, toType);
         if (STYLES_FOR_GAUGES.containsKey(key)) {
             return Optional.of(STYLES_FOR_GAUGES.get(key));
@@ -150,8 +155,8 @@ public class CRBogeyStyles {
         Optional<BogeyStyle> mapped = getMapped(from, toType);
         if (!forceFit || (toType == TrackType.STANDARD && mapped.isEmpty()))
             return mapped;
-        if (mapped.isEmpty() || (mapped.get().getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?> bogeyBlock
-            && !bogeyBlock.getValidPathfindingTypes(mapped.get()).contains(toType))) { // if no (suitable) style found
+        if (mapped.isEmpty() || (mapped.get().getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?>
+            && !mapped.get().getNextBlock(BogeySizes.LARGE).getValidPathfindingTypes(mapped.get()).contains(toType))) { // if no (suitable) style found
             return AllBogeyStyles.BOGEY_STYLES.values().stream().filter((style) -> styleFitsTrack(style, toType)).findFirst();
         }
         return mapped;
@@ -178,176 +183,176 @@ public class CRBogeyStyles {
     }
 
     public static final BogeyStyle MONOBOGEY = create("monobogey", "monobogey")
-        .displayName(Components.translatable("railways.bogeys.styles.monobogey"))
-        .size(BogeySizes.SMALL, () -> MonoBogeyRenderer::new, CRBlocks.MONO_BOGEY)
+        .displayName(Component.translatable("railways.bogeys.styles.monobogey"))
+        .size(BogeySizes.SMALL, CRBlocks.MONO_BOGEY,() ->() -> new BogeyStyle.SizeRenderer(new MonoBogeyRenderer(),StandardBogeyVisual.Small::new))
         .build();
 
-    public static final BogeyStyle INVISIBLE = create("invisible", Create.asResource(STANDARD_CYCLE_GROUP))
-        .displayName(Components.translatable("railways.bogeys.styles.invisible"))
-        .size(BogeySizes.SMALL, () -> InvisibleBogeyRenderer::new, CRBlocks.INVISIBLE_BOGEY)
+    public static final BogeyStyle INVISIBLE = create("invisible", STANDARD_CYCLE_GROUP)
+        .displayName(Component.translatable("railways.bogeys.styles.invisible"))
+        .size(BogeySizes.SMALL, CRBlocks.INVISIBLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new InvisibleBogeyRenderer(),StandardBogeyVisual.Small::new))
         .contactParticle(new CubeParticleData())
         .build();
 
     public static final BogeyStyle INVISIBLE_MONOBOGEY = create("invisible_monobogey", "monobogey")
-        .displayName(Components.translatable("railways.bogeys.styles.invisible_monobogey"))
-        .size(BogeySizes.SMALL, () -> InvisibleBogeyRenderer::new, CRBlocks.INVISIBLE_MONO_BOGEY)
+        .displayName(Component.translatable("railways.bogeys.styles.invisible_monobogey"))
+        .size(BogeySizes.SMALL, CRBlocks.INVISIBLE_MONO_BOGEY, ()->() -> new BogeyStyle.SizeRenderer(new InvisibleBogeyRenderer(),StandardBogeyVisual.Small::new))
         .contactParticle(new CubeParticleData())
         .build();
 
     // Single Axles
     public static final BogeyStyle
         SINGLEAXLE = create("singleaxle", SINGLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> SingleaxleBogeyRenderer::new, CRBlocks.SINGLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL,  CRBlocks.SINGLEAXLE_BOGEY,() ->() -> new BogeyStyle.SizeRenderer(new SingleaxleBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         LEAFSPRING = create("leafspring", SINGLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> LeafspringBogeyRenderer::new, CRBlocks.SINGLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL,CRBlocks.SINGLEAXLE_BOGEY, () ->() -> new BogeyStyle.SizeRenderer(new LeafspringBogeyRenderer() ,StandardBogeyVisual.Small::new))
             .build(),
         COILSPRING = create("coilspring", SINGLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> CoilspringBogeyRenderer::new, CRBlocks.SINGLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL,CRBlocks.SINGLEAXLE_BOGEY, () ->() -> new BogeyStyle.SizeRenderer(new CoilspringBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build();
 
     // Double Axles
     public static final BogeyStyle
         FREIGHT = create("freight", DOUBLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> FreightBogeyRenderer::new, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,()-> () ->new BogeyStyle.SizeRenderer(new FreightBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         ARCHBAR = create("archbar", DOUBLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> ArchbarBogeyRenderer::new, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new ArchbarBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         PASSENGER = create("passenger", DOUBLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> PassengerBogeyRenderer::new  , CRBlocks.DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL , CRBlocks.DOUBLEAXLE_BOGEY, ()-> () -> new BogeyStyle.SizeRenderer(new PassengerBogeyRenderer(),StandardBogeyVisual.Small::new) )
             .build(),
         MODERN = create("modern", DOUBLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> ModernBogeyRenderer::new, CRBlocks.DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL, CRBlocks.DOUBLEAXLE_BOGEY, () -> ()-> new BogeyStyle.SizeRenderer(new ModernBogeyRenderer(), StandardBogeyVisual.Small::new))
             .build(),
         BLOMBERG = create("blomberg", DOUBLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> BlombergBogeyRenderer::new, CRBlocks.DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL, CRBlocks.DOUBLEAXLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new BlombergBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         Y25 = create("y25", DOUBLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> Y25BogeyRenderer::new, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL, CRBlocks.LARGE_PLATFORM_DOUBLEAXLE_BOGEY,()->() -> new BogeyStyle.SizeRenderer(new Y25BogeyRenderer(), StandardBogeyVisual.Small::new))
             .build();
 
     // Triple Axles
     public static final BogeyStyle
         HEAVYWEIGHT = create("heavyweight", TRIPLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> HeavyweightBogeyRenderer::new, CRBlocks.TRIPLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL, CRBlocks.TRIPLEAXLE_BOGEY,()->() -> new BogeyStyle.SizeRenderer(new HeavyweightBogeyRenderer(),StandardBogeyVisual.Small::new ))
             .build(),
         RADIAL = create("radial", TRIPLEAXLE_CYCLE_GROUP)
-            .size(BogeySizes.SMALL, () -> RadialBogeyRenderer::new, CRBlocks.TRIPLEAXLE_BOGEY)
+            .size(BogeySizes.SMALL,  CRBlocks.TRIPLEAXLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new RadialBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build();
 
     // Wide Bogeys
     public static final BogeyStyle
-        WIDE_DEFAULT = create("wide_default", Create.asResource(STANDARD_CYCLE_GROUP))
-            .displayName(Components.translatable("railways.bogeys.styles.wide_default"))
-            .size(BogeySizes.SMALL, () -> WideDefaultBogeyRenderer::new, CRBlocks.WIDE_DOUBLEAXLE_BOGEY)
-            .size(BogeySizes.LARGE, () -> WideScotchYokeBogeyRenderer::new, CRBlocks.WIDE_SCOTCH_BOGEY)
+        WIDE_DEFAULT = create("wide_default", STANDARD_CYCLE_GROUP)
+            .displayName(Component.translatable("railways.bogeys.styles.wide_default"))
+            .size(BogeySizes.SMALL,CRBlocks.WIDE_DOUBLEAXLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new WideDefaultBogeyRenderer(), StandardBogeyVisual.Small::new))
+            .size(BogeySizes.LARGE,CRBlocks.WIDE_SCOTCH_BOGEY,()-> () ->new BogeyStyle.SizeRenderer(new  WideScotchYokeBogeyRenderer(), StandardBogeyVisual.Small::new))
             .build(),
-        WIDE_COMICALLY_LARGE = create("wide_comically_large", Create.asResource(STANDARD_CYCLE_GROUP))
-            .displayName(Components.translatable("railways.bogeys.styles.wide_comically_large"))
-            .size(BogeySizes.LARGE, () -> WideComicallyLargeScotchYokeBogeyRenderer::new, CRBlocks.WIDE_COMICALLY_LARGE_BOGEY)
+        WIDE_COMICALLY_LARGE = create("wide_comically_large",STANDARD_CYCLE_GROUP)
+            .displayName(Component.translatable("railways.bogeys.styles.wide_comically_large"))
+            .size(BogeySizes.LARGE, CRBlocks.WIDE_COMICALLY_LARGE_BOGEY,()-> () ->new BogeyStyle.SizeRenderer(new WideComicallyLargeScotchYokeBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build();
 
     // Narrow Bogeys
     public static final BogeyStyle
-        NARROW_DEFAULT = create("narrow_default", Create.asResource(STANDARD_CYCLE_GROUP))
-            .displayName(Components.translatable("railways.bogeys.styles.narrow_default"))
-            .size(BogeySizes.SMALL, () -> NarrowSmallBogeyRenderer::new, CRBlocks.NARROW_SMALL_BOGEY)
-            .size(BogeySizes.LARGE, () -> NarrowScotchYokeBogeyRenderer::new, CRBlocks.NARROW_SCOTCH_BOGEY)
+        NARROW_DEFAULT = create("narrow_default", STANDARD_CYCLE_GROUP)
+            .displayName(Component.translatable("railways.bogeys.styles.narrow_default"))
+            .size(BogeySizes.SMALL, CRBlocks.NARROW_SMALL_BOGEY,()->() -> new BogeyStyle.SizeRenderer(new NarrowSmallBogeyRenderer(),StandardBogeyVisual.Small::new ))
+            .size(BogeySizes.LARGE,  CRBlocks.NARROW_SCOTCH_BOGEY, ()-> () ->new BogeyStyle.SizeRenderer(new NarrowScotchYokeBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build(),
-        NARROW_DOUBLE_SCOTCH = create("narrow_double_scotch", Create.asResource(STANDARD_CYCLE_GROUP))
-            .displayName(Components.translatable("railways.bogeys.styles.narrow_double_scotch"))
-            .size(BogeySizes.LARGE, () -> NarrowDoubleScotchYokeBogeyRenderer::new, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY)
+        NARROW_DOUBLE_SCOTCH = create("narrow_double_scotch",STANDARD_CYCLE_GROUP)
+            .displayName(Component.translatable("railways.bogeys.styles.narrow_double_scotch"))
+            .size(BogeySizes.LARGE, CRBlocks.NARROW_DOUBLE_SCOTCH_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new NarrowDoubleScotchYokeBogeyRenderer(),StandardBogeyVisual.Small::new))
             .build();
 
     // Handcar
     public static final BogeyStyle HANDCAR = create("handcar", "handcar_cycle_group")
-        .size(BogeySizes.SMALL, () -> HandcarBogeyRenderer::new, CRBlocks.HANDCAR)
-        .soundType(AllSoundEvents.COGS.getId())
+        .size(BogeySizes.SMALL,  CRBlocks.HANDCAR,()-> ()-> new BogeyStyle.SizeRenderer(new HandcarBogeyRenderer(),StandardBogeyVisual.Small::new))
+        .soundEvent(AllSoundEvents.COGS::getMainEvent)
         .build();
 
     // Medium
     public static final BogeyStyle
         MEDIUM_STANDARD = create("medium_standard", DOUBLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_standard"))
-            .size(BogeySizes.SMALL, () -> MediumStandardRenderer::new, CRBlocks.MEDIUM_BOGEY)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_standard"))
+            .size(BogeySizes.SMALL, CRBlocks.MEDIUM_BOGEY, () -> () -> new BogeyStyle.SizeRenderer(new MediumStandardRenderer(), StandardBogeyVisual.Small::new))
             .build(),
         MEDIUM_SINGLE_WHEEL = create("medium_single_wheel", SINGLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_single_wheel"))
-            .size(BogeySizes.SMALL, () -> MediumSingleWheelRenderer::new, CRBlocks.MEDIUM_BOGEY)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_single_wheel"))
+            .size(BogeySizes.SMALL, CRBlocks.MEDIUM_BOGEY, () ->() -> new BogeyStyle.SizeRenderer(new MediumSingleWheelRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         MEDIUM_TRIPLE_WHEEL = create("medium_triple_wheel", TRIPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_triple_wheel"))
-            .size(BogeySizes.SMALL, () -> MediumTripleWheelRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_triple_wheel"))
+            .size(BogeySizes.SMALL, CRBlocks.MEDIUM_TRIPLE_WHEEL,() ->() ->  new BogeyStyle.SizeRenderer(new MediumTripleWheelRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         MEDIUM_QUADRUPLE_WHEEL = create("medium_quadruple_wheel", QUADRUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_quadruple_wheel"))
-            .size(BogeySizes.SMALL, () -> MediumQuadrupleWheelRenderer::new, CRBlocks.MEDIUM_QUADRUPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_quadruple_wheel"))
+            .size(BogeySizes.SMALL, CRBlocks.MEDIUM_QUADRUPLE_WHEEL, () ->() ->new BogeyStyle.SizeRenderer(new MediumQuadrupleWheelRenderer(),StandardBogeyVisual.Small::new))
             .build(),
         MEDIUM_QUINTUPLE_WHEEL = create("medium_quintuple_wheel", QUINTUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_quintuple_wheel"))
-            .size(BogeySizes.SMALL, () -> MediumQuintupleWheelRenderer::new, CRBlocks.MEDIUM_QUINTUPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_quintuple_wheel"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_QUINTUPLE_WHEEL, () ->()-> new BogeyStyle.SizeRenderer(new MediumQuintupleWheelRenderer(), StandardBogeyVisual.Small::new))
             .build(),
         MEDIUM_2_0_2_TRAILING = create("medium_2_0_2_trailing", SINGLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_2_0_2_trailing"))
-            .size(BogeySizes.SMALL, () -> Medium202TrailingRenderer::new, CRBlocks.MEDIUM_2_0_2_TRAILING)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_2_0_2_trailing"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_2_0_2_TRAILING,()-> () -> new BogeyStyle.SizeRenderer(new Medium202TrailingRenderer(), StandardBogeyVisual.Small::new))
             .build(),
         MEDIUM_4_0_4_TRAILING = create("medium_4_0_4_trailing", DOUBLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_4_0_4_trailing"))
-            .size(BogeySizes.SMALL, () -> Medium404TrailingRenderer::new, CRBlocks.MEDIUM_4_0_4_TRAILING)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_4_0_4_trailing"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_4_0_4_TRAILING,()-> () -> new BogeyStyle.SizeRenderer(new Medium404TrailingRenderer(),StandardBogeyVisual::new) )
             .build(),
         MEDIUM_6_0_6_TRAILING = create("medium_6_0_6_trailing", TRIPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_6_0_6_trailing"))
-            .size(BogeySizes.SMALL, () -> Medium606TrailingRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_6_0_6_trailing"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_TRIPLE_WHEEL,()-> () -> new BogeyStyle.SizeRenderer(new Medium606TrailingRenderer(),StandardBogeyVisual::new) )
             .build(),
         MEDIUM_6_0_6_TENDER = create("medium_6_0_6_tender", TRIPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_6_0_6_tender"))
-            .size(BogeySizes.SMALL, () -> Medium606TenderRenderer::new, CRBlocks.MEDIUM_TRIPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_6_0_6_tender"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_TRIPLE_WHEEL,()-> () -> new BogeyStyle.SizeRenderer(new Medium606TenderRenderer(),StandardBogeyVisual::new) )
             .build(),
         MEDIUM_8_0_8_TENDER = create("medium_8_0_8_tender", QUADRUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_8_0_8_tender"))
-            .size(BogeySizes.SMALL, () -> Medium808TenderRenderer::new, CRBlocks.MEDIUM_QUADRUPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_8_0_8_tender"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_QUADRUPLE_WHEEL,()-> () -> new BogeyStyle.SizeRenderer(new Medium808TenderRenderer(),StandardBogeyVisual::new) )
             .build(),
         MEDIUM_10_0_10_TENDER = create("medium_10_0_10_tender", QUINTUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.medium_10_0_10_tender"))
-            .size(BogeySizes.SMALL, () -> Medium10010TenderRenderer::new, CRBlocks.MEDIUM_QUINTUPLE_WHEEL)
+            .displayName(Component.translatable("railways.bogeys.styles.medium_10_0_10_tender"))
+            .size(BogeySizes.SMALL,CRBlocks.MEDIUM_QUINTUPLE_WHEEL,()-> () -> new BogeyStyle.SizeRenderer(new Medium10010TenderRenderer(),StandardBogeyVisual::new) )
             .build();
 
     // Large
     public static final BogeyStyle
         LARGE_CREATE_STYLED_0_4_0 = create("large_create_style_0_4_0", DOUBLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_4_0"))
-            .size(BogeySizes.LARGE, () -> LargeCreateStyled040Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_4_0)
+            .displayName(Component.translatable("railways.bogeys.styles.large_create_style_0_4_0"))
+            .size(BogeySizes.LARGE,CRBlocks.LARGE_CREATE_STYLE_0_4_0 ,()-> () -> new BogeyStyle.SizeRenderer(new LargeCreateStyled040Renderer(),StandardBogeyVisual::new) )
             .build(),
         LARGE_CREATE_STYLED_0_6_0 = create("large_create_style_0_6_0", TRIPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_6_0"))
-            .size(BogeySizes.LARGE, () -> LargeCreateStyled060Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_6_0)
+            .displayName(Component.translatable("railways.bogeys.styles.large_create_style_0_6_0"))
+            .size(BogeySizes.LARGE,CRBlocks.LARGE_CREATE_STYLE_0_6_0 ,()-> () -> new BogeyStyle.SizeRenderer(new LargeCreateStyled060Renderer(),StandardBogeyVisual::new) )
             .build(),
         LARGE_CREATE_STYLED_0_8_0 = create("large_create_style_0_8_0", QUADRUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_8_0"))
-            .size(BogeySizes.LARGE, () -> LargeCreateStyled080Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_8_0)
+            .displayName(Component.translatable("railways.bogeys.styles.large_create_style_0_8_0"))
+            .size(BogeySizes.LARGE,CRBlocks.LARGE_CREATE_STYLE_0_8_0 ,()-> () -> new BogeyStyle.SizeRenderer(new LargeCreateStyled080Renderer(),StandardBogeyVisual::new) )
             .build(),
         LARGE_CREATE_STYLED_0_10_0 = create("large_create_style_0_10_0", QUINTUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_10_0"))
-            .size(BogeySizes.LARGE, () -> LargeCreateStyled0100Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_10_0)
+            .displayName(Component.translatable("railways.bogeys.styles.large_create_style_0_10_0"))
+            .size(BogeySizes.LARGE, CRBlocks.LARGE_CREATE_STYLE_0_10_0 ,()->() -> new BogeyStyle.SizeRenderer(new LargeCreateStyled0100Renderer(),StandardBogeyVisual::new) )
             .build(),
         LARGE_CREATE_STYLED_0_12_0 = create("large_create_style_0_12_0", SEXTUPLEAXLE_CYCLE_GROUP)
-            .displayName(Components.translatable("railways.bogeys.styles.large_create_style_0_12_0"))
-            .size(BogeySizes.LARGE, () -> LargeCreateStyled0120Renderer::new, CRBlocks.LARGE_CREATE_STYLE_0_12_0)
+            .displayName(Component.translatable("railways.bogeys.styles.large_create_style_0_12_0"))
+            .size(BogeySizes.LARGE, CRBlocks.LARGE_CREATE_STYLE_0_12_0 ,()->() -> new BogeyStyle.SizeRenderer(new LargeCreateStyled0120Renderer(),StandardBogeyVisual::new) )
             .build();
 
 
-    public static AllBogeyStyles.BogeyStyleBuilder create(String name, String cycleGroup) {
+    public static BogeyStyle.Builder create(String name, String cycleGroup) {
         return create(Railways.asResource(name), Railways.asResource(cycleGroup))
-            .displayName(Components.translatable("railways.bogeys.styles." + name));
+            .displayName(Component.translatable("railways.bogeys.styles." + name));
     }
 
-    public static AllBogeyStyles.BogeyStyleBuilder create(String name, ResourceLocation cycleGroup) {
+    public static BogeyStyle.Builder create(String name, ResourceLocation cycleGroup) {
         return create(Railways.asResource(name), cycleGroup);
     }
 
-    public static AllBogeyStyles.BogeyStyleBuilder create(ResourceLocation name, ResourceLocation cycleGroup) {
-        return new AllBogeyStyles.BogeyStyleBuilder(name, cycleGroup);
+    public static BogeyStyle.Builder create(ResourceLocation name, ResourceLocation cycleGroup) {
+        return new BogeyStyle.Builder(name, cycleGroup);
     }
 
     public static CategoryEntry registerCategory(String name) {
@@ -366,7 +371,7 @@ public class CRBogeyStyles {
     }
 
     private static void addToCategory(CategoryEntry category, BogeyStyle style, float scale) {
-        String bogeyName = style.name.getPath();
+        String bogeyName = style.displayName.getString();
         if (style == STANDARD) bogeyName = "default";
         ResourceLocation icon = Railways.asResource("textures/gui/bogey_icons/" + bogeyName + "_icon.png");
 

@@ -19,7 +19,7 @@
 package com.railwayteam.railways.fabric.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
-import com.simibubi.create.content.contraptions.MountedFluidStorage;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorage;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import net.createmod.catnip.animation.LerpedFloat;
 import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;
@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = MountedFluidStorage.class, remap = false)
 public abstract class MountedFluidStorageMixin {
-    @Shadow protected abstract void onFluidStackChanged(FluidStack fs);
+    /**@Shadow protected abstract void onFluidStackChanged(FluidStack fs);
     @Shadow private BlockEntity blockEntity;
     @Shadow SmartFluidTank tank;
 
@@ -76,5 +76,5 @@ public abstract class MountedFluidStorageMixin {
 
             ci.cancel();
         }
-    }
+    }*/
 }

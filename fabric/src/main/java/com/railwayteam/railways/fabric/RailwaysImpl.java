@@ -33,10 +33,11 @@ import java.util.function.BiConsumer;
 public class RailwaysImpl implements ModInitializer {
 	@Override
 	public void onInitialize() {
-		Railways.init();
+
 		CRConfigsImpl.register();
 		CRParticleTypesParticleEntryImpl.register();
 		CommonEventsFabric.init();
+		Railways.init();
 	}
 
 	public static void finalizeRegistrate() {

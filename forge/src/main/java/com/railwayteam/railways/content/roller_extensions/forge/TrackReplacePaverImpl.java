@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class TrackReplacePaverImpl {
     public static ItemStack extract(FilterItemStack filter, MovementContext context, int amt) {
-        return ItemHelper.extract(context.contraption.getSharedInventory(),
+        return ItemHelper.extract(context.contraption.getStorage().getAllItems(),
                 stack -> filter.test(context.world, stack), amt, false);
     }
 }

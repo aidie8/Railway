@@ -25,10 +25,11 @@ import com.mojang.brigadier.context.CommandContext;
 import com.railwayteam.railways.content.coupling.TrainUtils;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Train;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.UuidArgument;
+import net.minecraft.network.chat.Component;
 
 import java.util.UUID;
 
@@ -70,23 +71,23 @@ public class SplitTrainCommand {
 
     private static int execute(CommandContext<CommandSourceStack> ctx, UUID trainId, int numberOffEnd) {
         if (trainId == null) {
-            ctx.getSource().sendFailure(Components.literal("No trains were found."));
+            ctx.getSource().sendFailure(Component.literal("No trains were found."));
             return 0;
         }
         Train train = Create.RAILWAYS.trains.get(trainId);
         if (train == null) {
-            ctx.getSource().sendFailure(Components.literal("No Train with id " + trainId.toString()
+            ctx.getSource().sendFailure(Component.literal("No Train with id " + trainId.toString()
               .substring(0, 5) + "[...] was found"));
             return 0;
         }
         try {
             TrainUtils.splitTrain(train, numberOffEnd);
         } catch (Exception e) {
-            ctx.getSource().sendFailure(Components.literal("Failed to split train: " + e.getMessage()));
+            ctx.getSource().sendFailure(Component.literal("Failed to split train: " + e.getMessage()));
             e.printStackTrace();
             return 0;
         }
-        ctx.getSource().sendSuccess(() -> Components.literal("Train '").append(train.name)
+        ctx.getSource().sendSuccess(() -> Component.literal("Train '").append(train.name)
           .append("' split successfully"), true);
         return 1;
     }

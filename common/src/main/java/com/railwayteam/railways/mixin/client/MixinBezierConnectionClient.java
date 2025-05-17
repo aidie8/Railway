@@ -96,11 +96,11 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
             Vec3 beamAngles = TrackRenderer.getModelAngles(segment.normal, beamDiff);
 
             PoseStack poseStack = new PoseStack();
-            TransformStack.cast(poseStack)
+            TransformStack.of(poseStack)
                 .translate(previousBeam)
-                .rotateYRadians(beamAngles.y)
-                .rotateXRadians(beamAngles.x)
-                .rotateZRadians(beamAngles.z)
+                .rotateY((float)beamAngles.y)
+                .rotateX((float)beamAngles.x)
+                .rotateZ((float)beamAngles.z)
                 .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
                 .scale(1, 1, (float) beamDiff.length() * scale);
             angles.beam = poseStack.last();
@@ -113,11 +113,11 @@ public abstract class MixinBezierConnectionClient implements IMonorailBezier {
                 Vec3 capAngles = TrackRenderer.getModelAngles(segment.normal, diff);
 
                 poseStack = new PoseStack();
-                TransformStack.cast(poseStack)
+                TransformStack.of(poseStack)
                     .translate(previous)
-                    .rotateYRadians(capAngles.y)
-                    .rotateXRadians(capAngles.x)
-                    .rotateZRadians(capAngles.z)
+                    .rotateY((float)capAngles.y)
+                    .rotateX((float)capAngles.x)
+                    .rotateZ((float)capAngles.z)
                     .translate(0, 2 / 16f + (segment.index % 2 == 0 ? 1 : -1) / 2048f - 1 / 1024f, -1 / 32f)
                     .rotateZ(0)
                     .scale(1, 1, (float) diff.length() * scale);

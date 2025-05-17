@@ -53,7 +53,7 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferspartial(CRBlockPartials.CONDUCTOR_ANTENNA, Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(CRBlockPartials.CONDUCTOR_ANTENNA, Blocks.AIR.defaultBlockState())
 					/*.rotateY(netHeadYaw)
 					.rotateX(headPitch)*/
 
@@ -74,7 +74,7 @@ public class ConductorRemoteLayer<T extends ConductorEntity, M extends Conductor
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferspartial(AllPartialModels.BLAZE_GOGGLES, Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(AllPartialModels.BLAZE_GOGGLES, Blocks.AIR.defaultBlockState())
 					/*.rotateY(netHeadYaw)
 					.rotateX(headPitch)*/
 

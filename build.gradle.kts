@@ -82,7 +82,9 @@ allprojects {
 
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
+        options.compilerArgs.addAll(listOf("-Xmaxerrs", "1000"))
     }
+
 
     java {
         withSourcesJar()
@@ -98,14 +100,20 @@ subprojects {
     val capitalizedName = project.name.capitalized()
 
     val loom = project.extensions.getByType<LoomGradleExtensionAPI>()
+
+    loom.runs.all {
+        println("Found run config: $name in project ${project.name}")
+    }
     loom.apply {
         silentMojangMappingsLicense()
         runs.configureEach {
             vmArg("-XX:+AllowEnhancedClassRedefinition")
             vmArg("-XX:+IgnoreUnrecognizedVMOptions")
+            vmArg("-Dmixin.debug=true")
             vmArg("-Dmixin.debug.export=true")
             vmArg("-Dmixin.env.remapRefMap=true")
-            vmArg("-Dmixin.env.refMapRemappingFile=${projectDir}/build/createSrgToMcp/output.srg")
+            vmArg("-Dmixin.env.refMapRemappingFile=${project.projectDir}/build/createSrgToMcp/output.srg")
+
         }
     }
 
@@ -436,6 +444,7 @@ fun RepositoryHandler.exclusiveMaven(url: String, vararg groups: String) {
         }
     }
 }
+
 
 operator fun String.invoke(): String {
     return rootProject.ext[this] as? String

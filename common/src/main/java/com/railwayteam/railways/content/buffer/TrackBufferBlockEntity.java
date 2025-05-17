@@ -24,6 +24,7 @@ import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -49,7 +50,7 @@ public class TrackBufferBlockEntity extends DyeableBlockEntity implements Transf
     }
 
     @Override
-    public void transform(StructureTransform transform) {
-        edgePoint.transform(transform);
+    public void transform(BlockEntity entity, StructureTransform transform) {
+        edgePoint.transform(entity,transform);
     }
 }

@@ -73,9 +73,9 @@ public abstract class MixinScheduleRuntime {
             ci.cancel();
         }
     }
-
-    @Inject(method = "tick", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
-    private void discardAutoSchedule(Level level, CallbackInfo ci) {
+                                                                //com.simibubi.create.content.trains.schedule
+    @Inject(method = "checkEndOfScheduleReached", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/trains/schedule/ScheduleRuntime;completed:Z", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
+    private void discardAutoSchedule(CallbackInfoReturnable<Boolean> cir) {
         if (isAutoSchedule) {
             Railways.LOGGER.info("[DISCARD_SCHEDULE] on train {} called in MixinScheduleRuntime#discardAutoSchedule because a non-looping auto schedule was completed", this.train.name.getString());
             discardSchedule();

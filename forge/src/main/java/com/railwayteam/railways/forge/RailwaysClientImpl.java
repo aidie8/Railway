@@ -21,9 +21,11 @@ package com.railwayteam.railways.forge;
 import com.mojang.brigadier.CommandDispatcher;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.RailwaysClient;
+import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.CRExtraDisplayTags;
 import com.railwayteam.railways.registry.CRParticleTypes;
-import com.simibubi.create.foundation.ModFilePackResources;
+import com.simibubi.create.foundation.pack.DynamicPack;
+import com.simibubi.create.foundation.pack.DynamicPackSource;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.commands.CommandSourceStack;
@@ -59,6 +61,8 @@ public class RailwaysClientImpl {
 	}
 
 	public static void onClientSetup(FMLClientSetupEvent event) {
+		//noinspection Convert2MethodRef
+		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
 		CRExtraDisplayTags.register();
 	}
 
@@ -115,7 +119,7 @@ public class RailwaysClientImpl {
 			Pack.create(Railways.asResource(pack.id).toString(),
 				Component.literal(pack.name),
 				false,
-				(a) -> new ModFilePackResources(pack.name, modFile, "resourcepacks/" + pack.id),
+				(a) -> new DynamicPack(pack.name,PackType.SERVER_DATA),
 				new Pack.Info(Component.empty(), 10, FeatureFlagSet.of()),
 				PackType.CLIENT_RESOURCES,
 				Pack.Position.TOP,

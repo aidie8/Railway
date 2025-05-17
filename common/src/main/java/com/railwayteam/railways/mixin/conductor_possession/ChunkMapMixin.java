@@ -53,7 +53,7 @@ public abstract class ChunkMapMixin {
 	 */
 	@Redirect(method = {
 			"getPlayers",
-			"lambda$setViewDistance$0", "m_ntjylyau", "method_17219" // these 3 all refer to the same thing with different mappings
+			"setViewDistance", "method_17219" // these 3 all refer to the same thing with different mappings removed  "m_ntjylyau" because idk what the new mapping is, or what mapping to look at
 	}, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;getLastSectionPos()Lnet/minecraft/core/SectionPos;"))
 	private SectionPos securitycraft$getCameraSectionPos(ServerPlayer player) {
 		if (ConductorPossessionController.isPossessingConductor(player) || player.getCamera().getClass().getName().equals("net.geforcemods.securitycraft.entity.camera.SecurityCamera"))

@@ -86,15 +86,15 @@ public class MixinTrackBlock {
     if (style == AllBogeyStyles.STANDARD)
       return;
 
-    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.getAllSizesSmallToLarge().get(0);
-    int escape = BogeySizes.getAllSizesSmallToLarge().size();
+    BogeySize size = selectedSize != null ? selectedSize : BogeySizes.allSortedIncreasing().get(0);
+    int escape = BogeySizes.allSortedIncreasing().size();
     while (!style.validSizes().contains(size)) {
       if (escape < 0)
         return;
-      size = size.increment();
+      size = size.nextBySize();
       escape--;
     }
-    Block block = style.getBlockOfSize(size);
+    Block block = style.getBlockForSize(size);
     cir.setReturnValue(
             block.defaultBlockState()
                     .setValue(BlockStateProperties.HORIZONTAL_AXIS,

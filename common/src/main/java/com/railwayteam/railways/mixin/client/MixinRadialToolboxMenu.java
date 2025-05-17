@@ -25,7 +25,7 @@ import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.content.equipment.toolbox.RadialToolboxMenu;
 import com.simibubi.create.content.equipment.toolbox.RadialToolboxMenu.State;
 import com.simibubi.create.content.equipment.toolbox.ToolboxBlockEntity;
-import com.simibubi.create.foundation.gui.AbstractSimiScreen;
+import net.createmod.catnip.gui.AbstractSimiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

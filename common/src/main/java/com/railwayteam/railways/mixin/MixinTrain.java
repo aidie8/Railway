@@ -42,7 +42,7 @@ import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import net.createmod.catnip.data.Couple;
-import com.simibubi.create.foundation.utility.NBTHelper;
+import net.createmod.catnip.nbt.NBTHelper;
 import net.createmod.catnip.data.Pair;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import net.minecraft.nbt.CompoundTag;
@@ -196,7 +196,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Inject(
             method = {
                     "lambda$backSignalListener$12", // fabric
-                    "lambda$backSignalListener$10" // forge
+                    "lambda$backSignalListener$12" // forge
             },
             at = @At("HEAD"),
             cancellable = true
@@ -216,7 +216,7 @@ public abstract class MixinTrain implements IOccupiedCouplers, IIndexedSchedule,
     @Inject(
             method = {
                     "lambda$collectInitiallyOccupiedSignalBlocks$20", // fabric
-                    "lambda$collectInitiallyOccupiedSignalBlocks$18" // forge
+                    "lambda$collectInitiallyOccupiedSignalBlocks$20" // forge
             },
             at = @At("HEAD"),
             cancellable = true

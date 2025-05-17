@@ -18,13 +18,14 @@
 
 package com.railwayteam.railways.mixin;
 
-import com.simibubi.create.content.contraptions.MountedFluidStorage;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorage;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(MountedFluidStorage.class)
 public interface AccessorMountedFluidStorage {
-    @Accessor(value = "tank", remap = false)
-    SmartFluidTank railways$getTank();
+    //@Accessor(value = "type", remap = false)
+    //MountedFluidStorageType<? extends MountedFluidStorage> railways$getTank();
 }

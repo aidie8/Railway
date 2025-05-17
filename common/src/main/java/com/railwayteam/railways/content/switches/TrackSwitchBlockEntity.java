@@ -54,6 +54,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -112,7 +114,7 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
 
         AutoMode(AllIcons icon) {
             this.icon = icon;
-            this.translationKey = "railways.switch.auto_mode." + Lang.asId(name());
+            this.translationKey = "railways.switch.auto_mode." + CreateLang.asId(name());
         }
 
         @Override
@@ -144,22 +146,22 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
             autoMode = new ScrollOptionBehaviour<>(AutoMode.class, Component.translatable("railways.switch.auto_mode"),
                     this, new ValueBoxTransform() {
                 @Override
-                public Vec3 getLocalOffset(BlockState state) {
+                public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
                     Vec3 base = new Vec3(12 / 16.0, 4.5 / 16.0, 4 / 16.0);
                     base = VecHelper.rotateCentered(base, AngleHelper.horizontalAngle(state.getValue(FACING)), Direction.Axis.Y);
                     return base;
                 }
 
                 @Override
-                public void rotate(BlockState state, PoseStack ms) {
+                public void rotate(LevelAccessor level, BlockPos pos, BlockState state, PoseStack ms) {
                     TransformStack.of(ms)
                             .rotateY(AngleHelper.horizontalAngle(state.getValue(FACING)) - 90)
                             .rotateX(90);
                 }
 
                 @Override
-                public boolean testHit(BlockState state, Vec3 localHit) {
-                    Vec3 offset = getLocalOffset(state);
+                public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+                    Vec3 offset = getLocalOffset(level,pos,state);
                     if (offset == null)
                         return false;
                     return localHit.distanceTo(offset) < scale / 3;
@@ -177,8 +179,8 @@ public class TrackSwitchBlockEntity extends SmartBlockEntity implements Transfor
     }
 
     @Override
-    public void transform(StructureTransform transform) {
-        edgePoint.transform(transform);
+    public void transform(BlockEntity blockEntity, StructureTransform transform) {
+        edgePoint.transform(blockEntity,transform);
     }
 
     public boolean isAutomatic() {

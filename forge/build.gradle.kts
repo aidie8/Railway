@@ -27,7 +27,14 @@ loom {
     forge {
         mixinConfig("railways-common.mixins.json")
         mixinConfig("railways.mixins.json")
-
+        runs.configureEach {
+            vmArg("-XX:+AllowEnhancedClassRedefinition")
+            vmArg("-XX:+IgnoreUnrecognizedVMOptions")
+            vmArg("-Dmixin.debug=true")
+            vmArg("-Dmixin.debug.export=true")
+            vmArg("-Dmixin.env.remapRefMap=true")
+            vmArg("-Dmixin.env.refMapRemappingFile=${project.projectDir}/build/createSrgToMcp/output.srg")
+        }
         convertAccessWideners = true
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
     }
@@ -43,7 +50,7 @@ dependencies {
     modImplementation("dev.engine-room.flywheel:flywheel-forge-${"minecraft_version"()}:${"flywheel_forge_version"()}")
 
 
-    modImplementation("net.createmod.ponder:Ponder-Common-${"minecraft_version"()}:${"ponder_version"()}")
+    modImplementation("net.createmod.ponder:Ponder-Forge-${"minecraft_version"()}:${"ponder_version"()}")
     // Development QOL
     modLocalRuntime("dev.emi:emi-forge:${"emi_version"()}")
 
@@ -101,8 +108,8 @@ dependencies {
         modLocalRuntime("curse.maven:securitycraft-64760:${"sc_version"()}")
     }
 
-    compileOnly("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")
-    annotationProcessor(implementation(include("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")!!)!!)
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${"mixin_extras_version"()}")!!)
+    implementation("io.github.llamalad7:mixinextras-forge:${"mixin_extras_version"()}")
 }
 
 publishMods {

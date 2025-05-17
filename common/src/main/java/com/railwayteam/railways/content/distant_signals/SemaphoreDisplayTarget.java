@@ -19,10 +19,9 @@
 package com.railwayteam.railways.content.distant_signals;
 
 import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
-import com.simibubi.create.content.redstone.displayLink.target.DisplayTarget;
+import com.simibubi.create.api.behaviour.display.DisplayTarget;
 import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
-import com.simibubi.create.foundation.utility.Components;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -53,6 +52,6 @@ public class SemaphoreDisplayTarget extends DisplayTarget {
 
     @Override
     public Component getLineOptionText(int line) {
-        return Components.translatable("railways.display_target.semaphore."+(line != 0 ? "distant" : "normal"));
+        return Component.translatable("railways.display_target.semaphore."+(line != 0 ? "distant" : "normal"));
     }
 }

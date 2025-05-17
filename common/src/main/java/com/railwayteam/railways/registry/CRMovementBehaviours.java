@@ -29,10 +29,6 @@ public class CRMovementBehaviours {
     }
 
     private static void add(Block block, MovementBehaviour behaviour) {
-        AllMovementBehaviours.registerBehaviour(block, behaviour);
-    }
-
-    private static void add(ResourceLocation block, MovementBehaviour behaviour) {
-        AllMovementBehaviours.registerBehaviour(block, behaviour);
+        MovementBehaviour.REGISTRY.register(block, behaviour);
     }
 }

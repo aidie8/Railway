@@ -108,8 +108,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.*;
 import java.util.function.Function;
 
-import static com.simibubi.create.AllInteractionBehaviours.interactionBehaviour;
-import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
+import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
+import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.BuilderTransformers.copycat;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.*;
@@ -239,7 +239,7 @@ public class CRBlocks {
         .transform(BuilderTransformers.semaphore())
             .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
         .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-        .onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
+        //.onRegister(assignDataBehaviour(new SemaphoreDisplayTarget()))
         .item(SemaphoreItem::new).transform(customItemModel())
         .transform(axeOnly())
         .addLayer(() -> RenderType::translucent)
@@ -253,7 +253,7 @@ public class CRBlocks {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(BuilderTransformers.trackCoupler())
                     .transform(pickaxeOnly())
-                    .onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
+                    //.onRegister(assignDataBehaviour(new TrackCouplerDisplaySource(), "track_coupler_info"))
                     .lang("Train Coupler")
                     .item(TrackCouplerBlockItem.ofType(CREdgePointTypes.COUPLER))
                     .transform(customItemModel("_", "block_both"))
@@ -267,7 +267,7 @@ public class CRBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+            //.onRegister(assignDataBehaviour(new SwitchDisplaySource()))
             .onRegister(ItemUseOverrides::addBlock)
             .lang("Andesite Track Switch")
             .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
@@ -282,7 +282,7 @@ public class CRBlocks {
             .properties(BlockBehaviour.Properties::noOcclusion)
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(pickaxeOnly())
-            .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
+       //     .onRegister(assignDataBehaviour(new SwitchDisplaySource()))
             .onRegister(ItemUseOverrides::addBlock)
             .lang("Brass Track Switch")
             .item(TrackSwitchBlockItem.ofType(CREdgePointTypes.SWITCH))
@@ -577,7 +577,7 @@ public class CRBlocks {
         .properties(BlockBehaviour.Properties::noOcclusion)
         .addLayer(() -> RenderType::cutoutMipped)
         .transform(pickaxeOnly())
-        .onRegister(AllMovementBehaviours.movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
+        .onRegister(movementBehaviour(new SmokeStackMovementBehaviour(true, false, false)))
         .lang("Radiator Fan")
         .item()
         .model((c, p) -> p.withExistingParent("item/" + c.getName(), Railways.asResource("block/smokestack/block_diesel")))

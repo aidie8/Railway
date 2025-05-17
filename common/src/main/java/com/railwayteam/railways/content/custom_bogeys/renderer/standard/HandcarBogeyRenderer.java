@@ -18,40 +18,29 @@
 
 package com.railwayteam.railways.content.custom_bogeys.renderer.standard;
 
-import com.jozufozu.flywheel.api.MaterialManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.railwayteam.railways.content.handcar.ik.DoubleArmIK;
 import com.simibubi.create.content.trains.bogey.BogeyRenderer;
-import com.simibubi.create.content.trains.bogey.BogeySizes;
 import com.simibubi.create.content.trains.entity.CarriageBogey;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
 import static com.railwayteam.railways.registry.CRBlockPartials.*;
 
-public class HandcarBogeyRenderer extends BogeyRenderer {
+public class HandcarBogeyRenderer implements BogeyRenderer {
     private CarriageBogey carriageBogey;
-
-    @Override
-    public void initialiseContraptionModelData(MaterialManager materialManager, CarriageBogey carriageBogey) {
-        createModelInstance(materialManager, HANDCAR_WHEELS, 2);
-        createModelInstance(materialManager, HANDCAR_COUPLING, HANDCAR_FRAME, HANDCAR_HANDLE_FIRST_PERSON,
-                HANDCAR_HANDLE, HANDCAR_LARGE_COG, HANDCAR_SMALL_COG);
-
-        this.carriageBogey = carriageBogey;
-    }
-
-    @Override
-    public BogeySizes.BogeySize getSize() {
-        return BogeySizes.SMALL;
-    }
 
     private boolean isFirstPerson() {
         Minecraft mc = Minecraft.getInstance();
@@ -69,12 +58,11 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
     }
 
     @Override
-    public void render(CompoundTag bogeyData, float wheelAngle, PoseStack ms, int light, VertexConsumer vb, boolean inContraption) {
+    public void render(CompoundTag bogeyData, float wheelAngle, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay, boolean inContraption) {
 //            wheelAngle = AnimationTickHolder.getTicks(true) + AnimationTickHolder.getPartialTicks();
         wheelAngle *= 2;
-        boolean inInstancedContraption = vb == null;
-
-        getTransform(HANDCAR_FRAME, ms, inInstancedContraption)
+        VertexConsumer buffer = bufferSource.getBuffer(RenderType.cutoutMipped());
+        CachedBuffers.partial(HANDCAR_FRAME, Blocks.AIR.defaultBlockState())
                 .translate(0, 5 / 16f, 0)
                 .renderInto(poseStack, buffer);
 
@@ -95,63 +83,59 @@ public class HandcarBogeyRenderer extends BogeyRenderer {
         Vec2 hingeOffset = DoubleArmIK.calculateJointOffset(upperVec2, couplingVec2, 14 / 16., 18 / 16.);
         Vec2 hingePos2 = hingeOffset.add(couplingVec2);
 
-        double couplingAngle;
-        double handleAngle;
+        float couplingAngle;
+        float handleAngle;
 
         {
-            couplingAngle = Mth.atan2((hingeOffset.y), (hingeOffset.x));
+            couplingAngle =(float) Mth.atan2((hingeOffset.y), (hingeOffset.x));
 
             Vec2 handle_offset = hingePos2.add(upperVec2.negated());
-            handleAngle = Mth.atan2(handle_offset.y, handle_offset.x);
+            handleAngle = (float)Mth.atan2(handle_offset.y, handle_offset.x);
         }
 
         boolean firstPerson = isFirstPerson();
 
-        getTransform(HANDCAR_HANDLE, ms, inInstancedContraption)
-                .translateY(39 / 16.)
-                .rotateZ(180)
-                .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
-                .translateY(-34 / 16.)
+        CachedBuffers.partial(HANDCAR_HANDLE,Blocks.AIR.defaultBlockState())
+                .translateY(39 / 16.f)
+                .rotateZDegrees(180)
+                .rotateX((float)(handleAngle - Math.toRadians(90-32.5)))
+                .translateY(-34 / 16.f)
                 .scale(firstPerson ? 0 : 1)
                 .renderInto(poseStack, buffer);
-        getTransform(HANDCAR_HANDLE_FIRST_PERSON, ms, inInstancedContraption)
-                .translateY(39 / 16.)
-                .rotateZ(180)
-                .rotateXRadians(handleAngle - Math.toRadians(90-32.5))
-                .translateY(-34 / 16.)
+        CachedBuffers.partial(HANDCAR_HANDLE_FIRST_PERSON,Blocks.AIR.defaultBlockState())
+                .translateY(39 / 16.f)
+                .rotateZDegrees(180)
+                .rotateX((float)(handleAngle - Math.toRadians(90-32.5)))
+                .translateY(-34 / 16.f)
                 .scale(firstPerson ? 1 : 0)
                 .renderInto(poseStack, buffer);
 
-        getTransform(HANDCAR_COUPLING, ms, inInstancedContraption)
+        CachedBuffers.partial(HANDCAR_COUPLING,Blocks.AIR.defaultBlockState())
                 .translate(coupling_pos)
-                .rotateXRadians(-(couplingAngle - Mth.HALF_PI))
+                .rotateX(-(couplingAngle - Mth.HALF_PI))
                 .renderInto(poseStack, buffer);
 
-        getTransform(HANDCAR_LARGE_COG, ms, inInstancedContraption)
+        CachedBuffers.partial(HANDCAR_LARGE_COG,Blocks.AIR.defaultBlockState())
                 .translate(-8 / 16f, 12 / 16f, -3.5 / 16f)
-                .rotateX((-wheelAngle / 2) + 22.5)
-                .rotateZ(90)
+                .rotateX((-wheelAngle / 2f) + 22.5f)
+                .rotateZDegrees(90)
                 .translate(0, -7 / 16f, 0)
                 .renderInto(poseStack, buffer);
 
-        getTransform(HANDCAR_SMALL_COG, ms, inInstancedContraption)
+        CachedBuffers.partial(HANDCAR_SMALL_COG,Blocks.AIR.defaultBlockState())
                 .translate(-8 / 16f, 12 / 16f, -1)
                 .rotateX(wheelAngle)
-                .rotateZ(90)
+                .rotateZDegrees(90)
                 .translate(0, -7 / 16f, 0)
                 .renderInto(poseStack, buffer);
 
-        BogeyModelData[] wheels = getTransform(HANDCAR_WHEELS, ms, inInstancedContraption, 2);
+        SuperByteBuffer wheels = CachedBuffers.partial(HANDCAR_WHEELS,Blocks.AIR.defaultBlockState());
         for (int side : Iterate.positiveAndNegative) {
-            if (!inInstancedContraption)
-                ms.pushPose();
-            wheels[(side + 1) / 2]
+            wheels
                     .translate(0, 12 / 16f, side)
                     .rotateX(wheelAngle)
                     .translate(0, -12 / 16f, 0)
                     .renderInto(poseStack, buffer);
-            if (!inInstancedContraption)
-                ms.popPose();
         }
     }
 }

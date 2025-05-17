@@ -18,18 +18,28 @@
 
 package com.railwayteam.railways.registry;
 
+import com.railwayteam.railways.Railways;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.foundation.ponder.PonderRegistry;
-import com.simibubi.create.infrastructure.ponder.AllPonderTags;
+import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
+import com.tterrag.registrate.util.entry.ItemProviderEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
+import net.createmod.ponder.foundation.PonderIndex;
+import net.createmod.ponder.foundation.registration.DefaultPonderTagRegistrationHelper;
+import net.createmod.ponder.foundation.registration.PonderLocalization;
+import net.createmod.ponder.foundation.registration.PonderTagRegistry;
 
 public class CRExtraDisplayTags {
+
     public static void register() {
-        PonderRegistry.TAGS.forTag(AllPonderTags.DISPLAY_SOURCES)
+
+        PonderTagRegistrationHelper<ItemProviderEntry<?>> HELPER = new DefaultPonderTagRegistrationHelper(Railways.MOD_ID, (PonderTagRegistry) PonderIndex.getTagAccess(), (PonderLocalization) PonderIndex.getLangAccess()).withKeyFunction(RegistryEntry::getId);
+        HELPER.addToTag((AllCreatePonderTags.DISPLAY_SOURCES))
             .add(AllBlocks.TRACK_SIGNAL)
             .add(CRBlocks.TRACK_COUPLER)
             .add(CRBlocks.ANDESITE_SWITCH)
             .add(CRBlocks.BRASS_SWITCH);
-        PonderRegistry.TAGS.forTag(AllPonderTags.DISPLAY_TARGETS)
+        HELPER.addToTag(AllCreatePonderTags.DISPLAY_TARGETS)
             .add(CRBlocks.SEMAPHORE);
     }
 }

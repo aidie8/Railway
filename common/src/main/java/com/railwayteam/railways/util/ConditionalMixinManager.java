@@ -45,7 +45,7 @@ public class ConditionalMixinManager {
             boolean shouldApply = true;
             for (AnnotationNode node : annotationNodes) {
                 if (node.desc.equals(Type.getDescriptor(ConditionalMixin.class))) {
-                    List<Mods> mods = Annotations.getValue(node, "mods", true, Mods.class);
+                    List<Mods> mods = Annotations.getValue(node, "Mods", true, Mods.class);
                     boolean applyIfPresent = Annotations.getValue(node, "applyIfPresent", Boolean.TRUE);
                     boolean anyModsLoaded = anyModsLoaded(mods);
                     shouldApply = anyModsLoaded == applyIfPresent;

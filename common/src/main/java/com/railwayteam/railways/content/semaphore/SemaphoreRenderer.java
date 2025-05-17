@@ -44,10 +44,10 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
         float yRot = AngleHelper.horizontalAngle(blockState.getValue(NixieTubeBlock.FACING))+180;
 
-        TransformStack msr = TransformStack.cast(ms);
-        msr.centre()
-                .rotateY(yRot)
-                .unCentre();
+        TransformStack msr = TransformStack.of(ms);
+        msr.center();
+        msr     .rotateY(yRot);
+        msr     .uncenter();
 
         boolean yellow = te.isDistantSignal;
 
@@ -92,9 +92,9 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW_FLIPPED:CRBlockPartials.SEMAPHORE_ARM_RED_FLIPPED:
                 yellow? CRBlockPartials.SEMAPHORE_ARM_YELLOW:CRBlockPartials.SEMAPHORE_ARM_RED;
         }
-        CachedBufferspartial(arm, blockState)
+        CachedBuffers.partial(arm, blockState)
                 .light(light)
-                .rotateCentered(Direction.EAST,angle * (upside_down?-1:1))
+                .rotateCentered(angle * (upside_down?-1:1),Direction.EAST)
                 .renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
         float renderTime = AnimationTickHolder.getRenderTime(te.getLevel());
@@ -119,7 +119,7 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
 
 
-            CachedBufferspartial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
+            CachedBuffers.partial(AllPartialModels.SIGNAL_WHITE_CUBE, blockState)
                     .light(0xF000F0)
                     .disableDiffuse()
                     .scale(1, 1, 1)
@@ -127,22 +127,22 @@ public class SemaphoreRenderer  extends SafeBlockEntityRenderer<SemaphoreBlockEn
 
 
 
-            CachedBufferer
+            CachedBuffers
                     .partial(
                             bottom ? AllPartialModels.SIGNAL_WHITE_GLOW:yellow?AllPartialModels.SIGNAL_YELLOW_GLOW:AllPartialModels.SIGNAL_RED_GLOW,
                             blockState)
                     .light(0xF000F0)
                     .disableDiffuse()
                     .scale(1.5f,2, 2)
-                    .renderInto(ms, buffer.getBuffer(RenderTypes.getAdditive()));
+                    .renderInto(ms, buffer.getBuffer(RenderTypes.additive()));
 
-            CachedBufferer
+            CachedBuffers
                     .partial(bottom?CRBlockPartials.SEMAPHORE_LAMP_WHITE:yellow?CRBlockPartials.SEMAPHORE_LAMP_YELLOW:CRBlockPartials.SEMAPHORE_LAMP_RED
                             , blockState)
                     .light(0xF000F0)
                     .disableDiffuse()
                     .scale(1 + 1 / 16f)
-                    .renderInto(ms, buffer.getBuffer(RenderTypes.getAdditive()));
+                    .renderInto(ms, buffer.getBuffer(RenderTypes.additive()));
 
 
 

@@ -20,7 +20,7 @@ package com.railwayteam.railways.fabric.mixin;
 
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
-import com.simibubi.create.content.contraptions.MountedFluidStorage;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import io.github.fabricators_of_create.porting_lib.fluids.FluidStack;
@@ -43,13 +43,13 @@ import java.util.stream.Collectors;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MountedStorageManagerMixin {
-    @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
+    /*@Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<? extends Storage<FluidVariant>> list);
 
     @Inject(method = "createHandlers", at = @At("TAIL"))
     private void createHandler(CallbackInfo ci) {
         CombinedTankWrapper ctw = wrapFluids(((IFuelInventory) this).railways$getFluidFuelStorage().values()
                 .stream()
-                .map(MountedFluidStorage::getFluidHandler)
+                .map(MountedFluidStorage::)
                 .collect(Collectors.toList()));
 
         ((IFuelInventory) this).railways$setFuelFluids(ctw);
@@ -91,5 +91,5 @@ public abstract class MountedStorageManagerMixin {
         MountedFluidStorage mountedFuelFluidStorage = ((IFuelInventory) this).railways$getFluidFuelStorage().get(localPos);
         if (mountedFuelFluidStorage != null)
             mountedFuelFluidStorage.updateFluid(containedFluid);
-    }
+    }*/
 }

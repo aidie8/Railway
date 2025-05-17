@@ -20,7 +20,8 @@ package com.railwayteam.railways.registry;
 
 import com.railwayteam.railways.content.moving_bes.GuiBlockMovingInteractionBehaviour;
 import com.simibubi.create.AllInteractionBehaviours;
-import com.simibubi.create.content.contraptions.behaviour.MovingInteractionBehaviour;
+import com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour;
+import com.simibubi.create.api.registry.SimpleRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,10 +37,7 @@ public class CRInteractionBehaviours {
     }
 
     private static void add(Block block, MovingInteractionBehaviour behaviour) {
-        AllInteractionBehaviours.registerBehaviour(block, behaviour);
+        MovingInteractionBehaviour.REGISTRY.register(block, behaviour);
     }
 
-    private static void add(ResourceLocation block, MovingInteractionBehaviour behaviour) {
-        AllInteractionBehaviours.registerBehaviour(block, behaviour);
-    }
 }

@@ -62,10 +62,10 @@ public class MixinTrackRenderer {
                 if (te.isTilted()) {
                     double angle = te.tilt.smoothingAngle.get();
                     switch (te.getBlockState().getValue(TrackBlock.SHAPE)) {
-                        case ZO -> TransformStack.cast(ms)
-                            .rotateX(-angle);
-                        case XO -> TransformStack.cast(ms)
-                            .rotateZ(angle);
+                        case ZO -> TransformStack.of(ms)
+                            .rotateX((float)-angle);
+                        case XO -> TransformStack.of(ms)
+                            .rotateZ((float)angle);
                     }
                 }
 
@@ -82,14 +82,14 @@ public class MixinTrackRenderer {
 
                 PartialModel texturedPartial = reTexture(spec.model, casingBlock);
 
-                CachedBufferspartial(reTexture(spec.model, casingBlock), casingBlock.defaultBlockState())
+                CachedBuffers.partial(reTexture(spec.model, casingBlock), casingBlock.defaultBlockState())
                     .rotateX(transform.rx()).rotateY(transform.ry()).rotateZ(transform.rz())
                     .translate(transform.x(), transform.y(), transform.z())
                     .light(light)
                     .renderInto(ms, buffer.getBuffer(RenderType.cutoutMipped()));
 
                 for (CRBlockPartials.ModelTransform additionalTransform : spec.additionalTransforms) {
-                    CachedBufferspartial(texturedPartial, casingBlock.defaultBlockState())
+                    CachedBuffers.partial(texturedPartial, casingBlock.defaultBlockState())
                         .rotateX(additionalTransform.rx()).rotateY(additionalTransform.ry()).rotateZ(additionalTransform.rz())
                         .translate(additionalTransform.x(), additionalTransform.y(), additionalTransform.z())
                         .light(light)
@@ -115,7 +115,7 @@ public class MixinTrackRenderer {
         cancellable = true)
     private static void renderMonorailMaybe(Level level, BezierConnection bc, PoseStack ms, VertexConsumer vb, CallbackInfo ci) {
         if (bc.getMaterial().trackType == CRTrackMaterials.CRTrackType.MONORAIL) {
-            railways$renderActualMonorail(level, bc, ms, vb, bc.tePositions.getFirst());
+            railways$renderActualMonorail(level, bc, ms, vb, bc.bePositions.getFirst());
             ms.popPose(); // clean up pose, since cancelled
             ci.cancel(); // Don't do normal rendering
         }
@@ -133,7 +133,7 @@ public class MixinTrackRenderer {
             int light = LevelRenderer.getLightColor(level, segment.lightPosition.offset(tePosition));
 
             PoseStack.Pose beamTransform = segment.beam;
-            CachedBufferspartial(MONORAIL_SEGMENT_MIDDLE, air)
+            CachedBuffers.partial(MONORAIL_SEGMENT_MIDDLE, air)
                 .mulPose(beamTransform.pose())
                 .mulNormal(beamTransform.normal())
                 .light(light)
@@ -141,7 +141,7 @@ public class MixinTrackRenderer {
 
             for (boolean top : Iterate.trueAndFalse) {
                 PoseStack.Pose beamCapTransform = segment.beamCaps.get(top);
-                CachedBufferspartial(top ? MONORAIL_SEGMENT_TOP : MONORAIL_SEGMENT_BOTTOM, air)
+                CachedBuffers.partial(top ? MONORAIL_SEGMENT_TOP : MONORAIL_SEGMENT_BOTTOM, air)
                     .mulPose(beamCapTransform.pose())
                     .mulNormal(beamCapTransform.normal())
                     .light(light)

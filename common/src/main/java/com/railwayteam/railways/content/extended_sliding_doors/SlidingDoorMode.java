@@ -24,10 +24,12 @@ import com.simibubi.create.foundation.blockEntity.behaviour.CenteredSideValueBox
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions;
 import com.simibubi.create.foundation.gui.AllIcons;
 import net.createmod.catnip.math.AngleHelper;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.math.VecHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
@@ -62,7 +64,7 @@ public enum SlidingDoorMode implements INamedIconOptions {
 
     SlidingDoorMode(AllIcons icon, boolean stationBased) {
         this.icon = icon;
-        this.translationKey = "sliding_door.mode." + Lang.asId(name());
+        this.translationKey = "sliding_door.mode." + CreateLang.asId(name());
     }
 
     public boolean canOpenManually() {
@@ -103,7 +105,7 @@ public enum SlidingDoorMode implements INamedIconOptions {
         }
 
         @Override
-        public Vec3 getLocalOffset(BlockState state) {
+        public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
             Vec3 location = VecHelper.voxelSpace(8, 8, state.getValue(SlidingDoorBlock.FACING) == direction ? 3 : 16);
             location = VecHelper.rotateCentered(location, AngleHelper.horizontalAngle(getSide()), Direction.Axis.Y);
             location = VecHelper.rotateCentered(location, AngleHelper.verticalAngle(getSide()), Direction.Axis.X);
@@ -116,7 +118,7 @@ public enum SlidingDoorMode implements INamedIconOptions {
             float yRot1 = yRot % 90;
             float yRot2 = yRot - yRot1;
             float xRot = getSide() == Direction.UP ? 90 : getSide() == Direction.DOWN ? 270 : 0;
-            TransformStack.cast(ms)
+            TransformStack.of(ms)
                 .rotateY(yRot2)
 //                .translateZ(yRot1 > 45 ? -0.5 : 0.5)
                 .rotateY(yRot1)

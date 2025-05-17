@@ -76,7 +76,7 @@ public class TrackCouplerRenderer extends SmartBlockEntityRenderer<TrackCouplerB
             return;
 
         ms.pushPose();
-        TransformStack.cast(ms)
+        TransformStack.of(ms)
             .translate(targetPosition.subtract(pos));
         CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
             buffer, light, overlay, getCouplerOverlayModel(te), 1, offsetToSide);

@@ -23,7 +23,7 @@ import com.railwayteam.railways.mixin_interfaces.IHasTrackCasing;
 import com.railwayteam.railways.multiloader.PlayerSelection;
 import com.railwayteam.railways.registry.CRPackets;
 import com.railwayteam.railways.registry.CRTags;
-import com.simibubi.create.content.schematics.SchematicWorld;
+import net.createmod.catnip.levelWrappers.SchematicLevel;
 import com.simibubi.create.content.trains.track.BezierConnection;
 import com.simibubi.create.content.trains.track.TrackBlock;
 import com.simibubi.create.content.trains.track.TrackBlockEntity;
@@ -82,7 +82,7 @@ public abstract class MixinTrackBlockEntity extends SmartBlockEntity implements 
           BlockState blockState = this.level.getBlockState(worldPosition);
           if (blockState.hasProperty(TrackBlock.HAS_BE))
             level.setBlockAndUpdate(worldPosition, blockState.setValue(TrackBlock.HAS_BE, false));
-          if (!(this.level instanceof SchematicWorld))
+          if (!(this.level instanceof SchematicLevel))
             CRPackets.PACKETS.sendTo(PlayerSelection.tracking(this), new RemoveBlockEntityPacket(worldPosition));
         }
       } else if (trackCasing != null && !isAlternateModel) {

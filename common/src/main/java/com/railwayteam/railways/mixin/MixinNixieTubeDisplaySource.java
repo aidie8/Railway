@@ -25,7 +25,7 @@ import com.simibubi.create.content.redstone.displayLink.source.NixieTubeDisplayS
 import com.simibubi.create.content.redstone.displayLink.source.SingleLineDisplaySource;
 import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import com.simibubi.create.content.trains.signal.SignalBlockEntity;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -61,9 +61,9 @@ public abstract class MixinNixieTubeDisplaySource extends SingleLineDisplaySourc
         }
         context.flapDisplayContext = null;
         if (isSignalTarget(context)) {
-            cir.setReturnValue(Components.literal(state.name()));
+            cir.setReturnValue(Component.literal(state.name()));
             return;
         }
-        cir.setReturnValue(Components.translatable("railways.display_source.signal." + state.name().toLowerCase(Locale.ROOT)));
+        cir.setReturnValue(Component.translatable("railways.display_source.signal." + state.name().toLowerCase(Locale.ROOT)));
     }
 }

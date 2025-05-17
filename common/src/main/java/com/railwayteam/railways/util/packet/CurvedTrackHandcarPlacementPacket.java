@@ -24,7 +24,7 @@ import com.railwayteam.railways.registry.CRTrackMaterials;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.trains.graph.TrackGraphLocation;
 import com.simibubi.create.content.trains.track.*;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -88,7 +88,7 @@ public class CurvedTrackHandcarPlacementPacket implements C2SPacket {
             return;
 
         if (result.getValue().feedback != null) {
-            player.displayClientMessage(Lang.translateDirect(result.getValue().feedback)
+            player.displayClientMessage(CreateLang.translateDirect(result.getValue().feedback)
                 .withStyle(ChatFormatting.RED), true);
             AllSoundEvents.DENY.play(player.level, null, pos, .5f, 1);
             return;

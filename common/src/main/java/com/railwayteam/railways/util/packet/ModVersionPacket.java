@@ -25,7 +25,7 @@ import com.railwayteam.railways.config.CRConfigs;
 import com.railwayteam.railways.events.ClientEvents;
 import com.railwayteam.railways.multiloader.S2CPacket;
 import com.railwayteam.railways.registry.CRPackets;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -51,7 +51,7 @@ public record ModVersionPacket(String version) implements S2CPacket {
       String msg = "Steam 'n' Rails version mismatch: Server is using version " + version + ", you are using version " + RailwaysBuildInfo.VERSION + ". This may cause problems.";
       Railways.LOGGER.warn(msg);
       player.displayClientMessage(
-              Components.literal(msg).withStyle(ChatFormatting.DARK_RED),
+              Component.literal(msg).withStyle(ChatFormatting.DARK_RED),
               false
       );
     }

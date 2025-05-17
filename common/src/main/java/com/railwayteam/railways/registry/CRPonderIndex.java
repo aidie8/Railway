@@ -23,13 +23,21 @@ import com.railwayteam.railways.ponder.ConductorScenes;
 import com.railwayteam.railways.ponder.DoorScenes;
 import com.railwayteam.railways.ponder.TrainScenes;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
+
+import com.tterrag.registrate.util.entry.ItemProviderEntry;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
+import net.createmod.ponder.foundation.PonderIndex;
+import net.createmod.ponder.foundation.registration.DefaultPonderSceneRegistrationHelper;
+import net.createmod.ponder.foundation.registration.PonderLocalization;
+import net.createmod.ponder.foundation.registration.PonderSceneRegistry;
+
 
 
 public class CRPonderIndex {
-    private static final PonderRegistrationHelper HELPER = new PonderRegistrationHelper(Railways.MOD_ID);
 
     public static void register() {
+        PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = new DefaultPonderSceneRegistrationHelper(Railways.MOD_ID, (PonderSceneRegistry) PonderIndex.getSceneAccess()).withKeyFunction(RegistryEntry::getId);
         HELPER.forComponents(CRBlocks.SEMAPHORE)
             .addStoryBoard("semaphore", TrainScenes::signaling);
         HELPER.forComponents(CRBlocks.TRACK_COUPLER)

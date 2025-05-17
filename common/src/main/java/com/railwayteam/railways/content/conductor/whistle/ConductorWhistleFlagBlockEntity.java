@@ -34,6 +34,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -93,8 +94,8 @@ public class ConductorWhistleFlagBlockEntity extends SmartBlockEntity implements
     }
 
     @Override
-    public void transform(StructureTransform transform) {
-        station.transform(transform);
+    public void transform(BlockEntity be,StructureTransform transform) {
+        station.transform(be,transform);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class ConductorFlagLayer<T extends ConductorEntity, M extends EntityModel
 			//poseStack.translate(-0.5d, -1.2d, -0.94d);
 
 
-			CachedBufferspartial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(conductorEntity.getColor()), Blocks.AIR.defaultBlockState())
+			CachedBuffers.partial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(conductorEntity.getColor()), Blocks.AIR.defaultBlockState())
 					.translate(-0.78125, 0.15, -0.688)
 					.light(packedLight)
 					.renderInto(poseStack, buffer.getBuffer(RenderType.cutoutMipped()));

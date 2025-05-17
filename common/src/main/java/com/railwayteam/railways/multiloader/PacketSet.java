@@ -21,7 +21,7 @@ package com.railwayteam.railways.multiloader;
 import com.railwayteam.railways.Railways;
 import com.railwayteam.railways.registry.CRPackets;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-import com.simibubi.create.foundation.utility.Components;
+import net.minecraft.network.chat.Component;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -208,7 +208,7 @@ public abstract class PacketSet {
 		public void handle(Minecraft mc) {
 			if (CRPackets.PACKETS.version == serverVersion)
 				return;
-			Component error = Components.literal("Steam n' Rails on the client uses a different network format than the server.")
+			Component error = Component.literal("Steam n' Rails on the client uses a different network format than the server.")
 					.append(" You should use the same version of the mod on both sides.");
 			mc.getConnection().onDisconnect(error);
 		}

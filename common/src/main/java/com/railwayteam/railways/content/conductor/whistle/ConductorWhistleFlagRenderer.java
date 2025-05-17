@@ -46,7 +46,7 @@ public class ConductorWhistleFlagRenderer extends SmartBlockEntityRenderer<Condu
         super.renderSafe(te, partialTicks, ms, buffer, light, overlay);
         renderEdgePoint(te, ms, buffer, light, overlay);
 
-        CachedBufferspartial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(te.getColor()), Blocks.AIR.defaultBlockState())
+        CachedBuffers.partial(CRBlockPartials.CONDUCTOR_WHISTLE_FLAGS.get(te.getColor()), Blocks.AIR.defaultBlockState())
             .renderInto(ms, buffer.getBuffer(RenderType.cutout()));
     }
 

@@ -101,11 +101,11 @@ public class BufferModel extends ForwardingBakedModel {
             materialSwapper = getSwapper(be.getMaterial());
         }
 
-        if (materialSwapper != null || colorSwapper != null) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)), state);
-        } else {
+       // if (materialSwapper != null || colorSwapper != null) {
+        //    context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)), state);
+        //} else {
             super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-        }
+        //}
         if (isDiagonal) context.popTransform();
     }
 
@@ -133,11 +133,11 @@ public class BufferModel extends ForwardingBakedModel {
                 }
             }
         }
-        if (materialSwapper != null || colorSwapper != null) {
-            context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)));
-        } else {
+       // if (materialSwapper != null || colorSwapper != null) {
+       //     context.bakedModelConsumer().accept(new SpriteReplacingBakedModel(combineSwappers(materialSwapper, colorSwapper)));
+       // } else {
             super.emitItemQuads(stack, randomSupplier, context);
-        }
+       // }
     }
 
     private class SpriteReplacingBakedModel implements BakedModel {

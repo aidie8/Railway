@@ -91,7 +91,7 @@ public abstract class MixinAbstractBogeyBlock {
         }
     }
 
-    @WrapOperation(method = "getNextStyle(Lcom/simibubi/create/content/trains/bogey/BogeyStyle;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/Iterate;cycleValue(Ljava/util/List;Ljava/lang/Object;)Ljava/lang/Object;"))
+    @WrapOperation(method = "getNextStyle(Lcom/simibubi/create/content/trains/bogey/BogeyStyle;)Lcom/simibubi/create/content/trains/bogey/BogeyStyle;", at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Iterate;cycleValue(Ljava/util/List;Ljava/lang/Object;)Ljava/lang/Object;"))
     private Object wrapCycleWithFallback(List<Object> list, Object style, Operation<Object> original) {
         try {
             return original.call(list, style);

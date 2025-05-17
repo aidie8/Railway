@@ -32,7 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = BogeyBlockEntityRenderer.class, remap = false)
 public class MixinBogeyBlockEntityRenderer {
-    @Inject(method = "renderSafe", at = @At("RETURN"), remap = false)
+    @Inject(method = "renderSafe*", at = @At("RETURN"), remap = false)
     private <T extends BlockEntity> void railways$renderVirtualCoupling(T te, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfo ci) {
         if (te instanceof StandardBogeyBlockEntity sbte && te instanceof IStandardBogeyTEVirtualCoupling virtualCoupling) {
             double couplingDistance = virtualCoupling.getCouplingDistance();

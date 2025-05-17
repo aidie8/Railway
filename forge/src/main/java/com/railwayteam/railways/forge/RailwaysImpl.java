@@ -24,6 +24,13 @@ import com.railwayteam.railways.config.forge.CRConfigsImpl;
 import com.railwayteam.railways.multiloader.Env;
 import com.railwayteam.railways.registry.forge.CRCreativeModeTabsImpl;
 import com.railwayteam.railways.registry.forge.CRParticleTypesParticleEntryImpl;
+import com.simibubi.create.*;
+import com.simibubi.create.content.fluids.tank.BoilerHeaters;
+import com.simibubi.create.content.logistics.packager.AllInventoryIdentifiers;
+import com.simibubi.create.content.logistics.packager.AllUnpackingHandlers;
+import com.simibubi.create.content.trains.track.AllPortalTracks;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.advancement.AllTriggers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands.CommandSelection;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -31,6 +38,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.HashSet;
@@ -44,14 +52,23 @@ public class RailwaysImpl {
 
 	public RailwaysImpl() {
 		bus = FMLJavaModLoadingContext.get().getModEventBus();
+		finalizeRegistrate();
 		CRCreativeModeTabsImpl.register(RailwaysImpl.bus);
-		Railways.init();
+		bus.addListener(RailwaysImpl::init);
 		CRConfigsImpl.register(ModLoadingContext.get());
 		CRParticleTypesParticleEntryImpl.register(bus);
-		//noinspection Convert2MethodRef
-		Env.CLIENT.runIfCurrent(() -> () -> RailwaysClientImpl.init());
-	}
 
+
+
+
+
+
+	}
+	public static void init(final FMLCommonSetupEvent event)
+	{
+		event.enqueueWork(Railways::init);
+
+	}
 	public static void finalizeRegistrate() {
 		Railways.registrate().registerEventListeners(bus);
 	}

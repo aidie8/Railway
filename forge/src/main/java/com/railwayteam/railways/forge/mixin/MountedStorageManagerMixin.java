@@ -21,7 +21,7 @@ package com.railwayteam.railways.forge.mixin;
 import com.railwayteam.railways.content.fuel.tank.FuelTankBlockEntity;
 import com.railwayteam.railways.mixin.AccessorMountedFluidStorage;
 import com.railwayteam.railways.mixin_interfaces.IFuelInventory;
-import com.simibubi.create.content.contraptions.MountedFluidStorage;
+import com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorage;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import net.minecraft.core.BlockPos;
@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 
 @Mixin(value = MountedStorageManager.class, remap = false)
 public abstract class MountedStorageManagerMixin {
-    @Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<IFluidHandler> list);
+    /**@Shadow protected abstract CombinedTankWrapper wrapFluids(Collection<IFluidHandler> list);
 
     @Inject(method = "createHandlers", at = @At("TAIL"))
     private void createHandler(CallbackInfo ci) {
@@ -73,7 +73,7 @@ public abstract class MountedStorageManagerMixin {
                 return;
             IFluidTank tankInventory = tank.getTankInventory();
             if (tankInventory instanceof FluidTank)
-                ((FluidTank) tankInventory).setFluid(((AccessorMountedFluidStorage) mfs).railways$getTank().getFluid());
+                ((FluidTank) tankInventory).setFluid(((AccessorMountedFluidStorage) mfs).railways$getTank());
             tank.getFluidLevel()
                     .startWithValue(tank.getFillState());
             mfs.assignBlockEntity(tank);
@@ -93,5 +93,5 @@ public abstract class MountedStorageManagerMixin {
         MountedFluidStorage mountedFuelFluidStorage = ((IFuelInventory) this).railways$getFluidFuelStorage().get(localPos);
         if (mountedFuelFluidStorage != null)
             mountedFuelFluidStorage.updateFluid(containedFluid);
-    }
+    }*/
 }

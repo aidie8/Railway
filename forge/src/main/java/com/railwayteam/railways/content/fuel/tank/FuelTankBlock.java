@@ -27,7 +27,7 @@ import com.simibubi.create.foundation.advancement.AdvancementBehaviour;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.ComparatorUtil;
 import com.simibubi.create.foundation.fluid.FluidHelper;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -292,7 +292,7 @@ public class FuelTankBlock extends Block implements IWrenchable, IBE<FuelTankBlo
 
         @Override
         public String getSerializedName() {
-            return Lang.asId(name());
+            return CreateLang.asId(name());
         }
     }
 

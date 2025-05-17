@@ -22,7 +22,7 @@ import com.railwayteam.railways.content.smokestack.particles.chimneypush.Chimney
 import com.railwayteam.railways.content.smokestack.particles.legacy.SmokeParticleData;
 import com.railwayteam.railways.content.smokestack.particles.puffs.PuffSmokeParticleData;
 import com.simibubi.create.foundation.particle.ICustomParticleData;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -44,7 +44,7 @@ public enum CRParticleTypes {
 	private final ParticleEntry<?> entry;
 
 	<D extends ParticleOptions> CRParticleTypes(Supplier<? extends ICustomParticleData<D>> typeFactory) {
-		String name = Lang.asId(name());
+		String name = CreateLang.asId(name());
 		entry = new ParticleEntry<>(name, typeFactory);
 	}
 

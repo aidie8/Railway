@@ -22,7 +22,6 @@ import com.railwayteam.railways.Railways;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.schedule.condition.ScheduleWaitCondition;
 import com.simibubi.create.content.trains.station.GlobalStation;
-import com.simibubi.create.foundation.utility.Components;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -37,7 +36,7 @@ import net.minecraft.world.level.Level;
 public class StationLoadedCondition extends ScheduleWaitCondition {
     @Override
     public Pair<ItemStack, Component> getSummary() {
-        return Pair.of(ItemStack.EMPTY, Components.translatable("railways.schedule.condition.loaded"));
+        return Pair.of(ItemStack.EMPTY, Component.translatable("railways.schedule.condition.loaded"));
     }
 
     @Override
@@ -69,6 +68,6 @@ public class StationLoadedCondition extends ScheduleWaitCondition {
 
     @Override
     public MutableComponent getWaitingStatus(Level level, Train train, CompoundTag tag) {
-        return Components.translatable("railways.schedule.condition.unloaded.status");
+        return Component.translatable("railways.schedule.condition.unloaded.status");
     }
 }

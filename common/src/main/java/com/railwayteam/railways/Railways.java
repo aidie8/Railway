@@ -103,7 +103,7 @@ public class Railways {
     migrateConfig(commonConfigDir, CRConfigs::migrateCommon);
     
     ModSetup.register();
-    finalizeRegistrate();
+
 
     registerCommands(CRCommands::register);
     CRPackets.PACKETS.registerC2SListener();
