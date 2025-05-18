@@ -120,6 +120,7 @@ public class CRBogeyStyles {
     }
 
     public static boolean styleFitsTrack(BogeyStyle style, TrackType trackType) {
+        if (!style.validSizes().contains(BogeySizes.LARGE)) return false;
         if (style.getNextBlock(BogeySizes.LARGE) instanceof AbstractBogeyBlock<?>) {
             AbstractBogeyBlock<?> bogeyBlock = style.getNextBlock(BogeySizes.LARGE);
             return bogeyBlock.getValidPathfindingTypes(style).contains(trackType) && (trackType != CRTrackType.MONORAIL ^ bogeyBlock instanceof InvisibleMonoBogeyBlock);
@@ -189,7 +190,7 @@ public class CRBogeyStyles {
 
     public static final BogeyStyle INVISIBLE = create("invisible", STANDARD_CYCLE_GROUP)
         .displayName(Component.translatable("railways.bogeys.styles.invisible"))
-        .size(BogeySizes.SMALL, CRBlocks.INVISIBLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new InvisibleBogeyRenderer(),StandardBogeyVisual.Small::new))
+        .size(BogeySizes.LARGE, CRBlocks.INVISIBLE_BOGEY,()-> () -> new BogeyStyle.SizeRenderer(new InvisibleBogeyRenderer(),StandardBogeyVisual.Small::new))
         .contactParticle(new CubeParticleData())
         .build();
 
